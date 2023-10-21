@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_ARCHIVE_DOC_DMS</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: Archive content: DMS document</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>NDF</KEY>
+     <ENTRY>No description found</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_BO_DRAW</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create BO DRAW or its delegation counterpart</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get active document version</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DOC_STATUS_INFO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get document status information</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DRAW_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get DMS object data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_KEY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Key attribute - Document management system (DMS) key</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IO_PARENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ArchiveLink + DMS: Archived content of a business object</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IS_CONNECTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Connection entry (= document details)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_MANDT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Client (if cross-client usage)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_BO_DRAW</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Active document version</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DOC_STATUS_INFO</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DRAW_DATA</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

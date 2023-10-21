@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_ARCHIVE_CONT_VIEWER_CLI</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: Document Viewer: Client</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>APPEND_VAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>APPE_DOC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE_ALL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE_WINDOW</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DISP_DOC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_SINGLETON</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_VAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_IMC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document Viewer - IMC Handling</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_SINGLETON_IMC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common object: Document Viewer - Client (copy of CL_DV_SDV)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_SINGLETON_NO_IMC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common object: Document Viewer - Client (copy of CL_DV_SDV)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_VIEWER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document Viewer - Client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESS_COMMAND</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>description</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>APPE_DOC</CMPNAME>
+     <SCONAME>CX_DV_EXCEPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Base class for Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE_ALL</CMPNAME>
+     <SCONAME>CX_DV_EXCEPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Base class for Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE_WINDOW</CMPNAME>
+     <SCONAME>CX_DV_EXCEPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Base class for Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>CX_DV_EXCEPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Base class for Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISP_DOC</CMPNAME>
+     <SCONAME>CX_DV_EXCEPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Base class for Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_SINGLETON</CMPNAME>
+     <SCONAME>CX_DV_EXCEPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Base class for Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROCESS_COMMAND</CMPNAME>
+     <SCONAME>CX_DV_EXCEPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Base class for Exceptions</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_ARCHIVE_DOC_ARCH_LINK</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: Archive content: ArchiveLink document</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>ADO</KEY>
+     <ENTRY>Archived document</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>NDF</KEY>
+     <ENTRY>No description found</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ARE_DOC_ATTRIBUTES_ACTIVATED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check if the doc attributes are activated in AL settings</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>COMPLETE_MISSING_DOC_CLASS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete document class if missing or generic</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>COMPLETE_MISSING_DOC_TYPE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete document type if missing</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_BO_IMAGE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create BO IMAGE or its delegation counterpart</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CREATION_TIME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get creation time for sorting</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DOC_TYPE_DEFINITION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get document type definition</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DOC_TYPE_DESCRIPTION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get document type description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_META_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get meta data, like scanning date / -time and others</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_USER_DEFINED_ATTRIBUTES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get document attributes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MODIFY_USER_DEFINED_ATTRIBUTES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Modify document attributes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_KEY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Key attribute - ArchiveLink Document key</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MT_META_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ArchiveLink components of document</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ARE_DOC_ATTRIBUTES_ACTIVATED</CMPNAME>
+     <SCONAME>RV_ARE_ACTIVATED</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Document attributes are activated</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COMPLETE_MISSING_DOC_CLASS</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COMPLETE_MISSING_DOC_TYPE</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IO_PARENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ArchiveLink + DMS: Archived content of a business object</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IS_CONNECTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document (= connection entry)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_MANDT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Client (if cross-client usage)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_SORT_BY_TIME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Order by creation time (can be much slower than normal!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_BO_IMAGE</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CREATION_TIME</CMPNAME>
+     <SCONAME>IV_SORT_BY_TIME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Order by creation time (can be much slower than normal!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CREATION_TIME</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Meta data components of document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CREATION_TIME</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DOC_TYPE_DEFINITION</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_META_DATA</CMPNAME>
+     <SCONAME>IV_COMP_ID</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Component Id in generic form</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_META_DATA</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Meta data components of document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_META_DATA</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

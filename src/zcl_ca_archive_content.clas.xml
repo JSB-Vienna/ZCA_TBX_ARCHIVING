@@ -1,0 +1,883 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_ARCHIVE_CONTENT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: ArchiveLink + DMS content of a business object</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>ALD</KEY>
+     <ENTRY>Archive/DMS document to</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>NDF</KEY>
+     <ENTRY>No description found</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>ALD</KEY>
+       <ENTRY>ArchivLink-Dokumente zu</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>NDF</KEY>
+       <ENTRY>Keine Beschreibung vorhanden</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Archive a new object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ARCHIVE_VIA_DND_DIALOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Archive new document(s) via a drag&apos;n&apos;drop dialog</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ATTACH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Attach docs to business object (this deletes filters!)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHANGED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Object changed</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_BO_KEY_VALUES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check key values of Business Object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE_WINDOWS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Close windows of viewer</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Copy content to other business object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Object created</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_AL_FILT_BO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>AL Filter obj for business object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_AL_FILT_KEY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>AL Filter obj for business object key</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_DMS_FILT_BO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DMS Filter param name for business object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_DMS_FILT_KEY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DMS Filter param name for business object key</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_MY_TYPEID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Type Id</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Delete connections (not the docs themself!)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DETERMINE_BINARY_DOC_LENGTH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determine binary document length</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DETERMINE_CHARACTER_DOC_LENGTH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determine character document length</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Display document(s)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>EXTRACT_FROM_FILTER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Extract filter values into a range object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FREE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Release doc and viewer instances</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get documents (= connections) to business object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_AL_CONT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get ArchiveLink documents (= connections) to business object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determine archive Id from doc.type and SAP object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DMS_CONT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get DMS documents (= connections) to business object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create new or get existing instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_VIEWER_DEFAULT_BUTTON</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get default button of archive content viewer</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>HAS_CONTENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Are already documents attached to business object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_ARCH_FILTER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constants and value checks for archive content handler</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_SEL_OPTIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constants and value checks for select options / range tables</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_VIEWER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document Viewer - ArchiveLink (copy of CL_DV_SDV_AO)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_BO_DESC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Business object short descriptions</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_BO_KEY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Business Object key of archive object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_FILTER_DMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DMS filter values passed for method GET</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_LPOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Workflow Business object/class key - BOR Compatible</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_TOACU</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP ArchiveLink Customizing table</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MT_BUFFER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Instance buffer</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MT_DOCS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ArchiveLink and DMS document instances</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MT_FILTER_AL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>AL filter values passed for method GET</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_COUNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Number of selected documents</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_KEY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>GUID key (subst. for MS_BO_KEY -&gt; see table ZCA_MAP_BO_GUID)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_MANDT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Instance is in use for this client (cross-client usage)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_REFRESH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Full refresh of connected documents</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_WINDOW_ID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Window ID for closing</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>NEW_DOCUMENT_STORED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>One or more documents stored or deleted (check counter)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_CONTENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set content, e. g. after manipulating the result in MT_DOCS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_BUFFER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Buffered instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_T_BUFFER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Instance buffer</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IT_DOC_BIN</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table with raw data lines</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IT_DOC_CHAR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document content in character format</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_CREATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>User Id of Creator</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_DESCRIPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Description (captured by user)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_DOC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document (use FMs SCMS*XSTRING* for conversion)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_DOC_CLASS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP ArchiveLink: Document class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_DOC_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_DOC_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP ArchiveLink: Document type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_FILENAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Original file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>IV_LINK_IMMED</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Link document immediately with object</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Extended archive connection incl. TOAV0</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE_VIA_DND_DIALOG</CMPNAME>
+     <SCONAME>IV_REFRESH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X=Refresh from DB, D=Add Delta (only new), &apos; &apos;=Return buffer</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE_VIA_DND_DIALOG</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ATTACH</CMPNAME>
+     <SCONAME>IT_DOCS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>New documents (= connections)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ATTACH</CMPNAME>
+     <SCONAME>IV_REFRESH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X=Refresh from DB, D=Add Delta (only new), &apos; &apos;=Return buffer</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ATTACH</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ATTACH</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_BO_KEY_VALUES</CMPNAME>
+     <SCONAME>IS_BO_KEY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Business object/class key - BOR Compatible</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_BO_KEY_VALUES</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_EXISTENCE</CMPNAME>
+     <SCONAME>CX_BO_ERROR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_EXISTENCE</CMPNAME>
+     <SCONAME>CX_BO_INSTANCE_NOT_FOUND</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Find Business Exception: Instance Not Found</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE_WINDOWS</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE_WINDOWS</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IS_BO_KEY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Archive Business Object key - BOR Compatible</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IS_LPOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Business class key - technical WF key</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_MANDT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Client (if cross-client usage)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_PARAM</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>IO_CONT_TARGET</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Target instance</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>IS_BO_KEY_TARGET</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Business object/class key - BOR Compatible</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>IT_DOCS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Preselected conn. of source object - otherwise copy all</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>IV_REFRESH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Refresh buffer and read from DB again</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>ZCX_CA_PARAM</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>IS_FILTER_DMS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter for DMS (see method documentation; use C_DMS_FILT_*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>IT_DOCS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Connections to be deleted</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>IT_FILTER_AL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter for ArchiveLink result - selected in any case</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DETERMINE_BINARY_DOC_LENGTH</CMPNAME>
+     <SCONAME>IT_DOCUMENT_AS_BINARY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document in binary format</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DETERMINE_BINARY_DOC_LENGTH</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Length of the document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DETERMINE_CHARACTER_DOC_LENGTH</CMPNAME>
+     <SCONAME>IT_DOCUMENT_IN_CHARACTER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document in character format</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DETERMINE_CHARACTER_DOC_LENGTH</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Length of the document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IO_PARENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Parent container (for a single document only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IT_BUTTONS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Visible toolbar buttons (see comment to this method)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_FORCE_IMC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Open in external dynpro/mode / IO_PARENT is ignored</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_FORCE_NO_IMC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Description</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_NO_GOS_TOOLBAR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Hide GOS toolbar</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_NO_TOOLBAR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Hide toolbar</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_USE_SINGLETON</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Use singleton (= SAP standard behavior)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXTRACT_FROM_FILTER</CMPNAME>
+     <SCONAME>IT_DMS_FILTER_RANGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Passed filter values</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXTRACT_FROM_FILTER</CMPNAME>
+     <SCONAME>IV_DMS_FILTER_FIELD_NAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter name = Column name for select</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXTRACT_FROM_FILTER</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Range table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXTRACT_FROM_FILTER</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IS_FILTER_DMS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter for DMS (see documentation of this method)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IT_FILTER_AL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter for ArchiveLink (const MO_ARCH_FILTER-&gt;AL_FILTER-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_ONLY_ACT_VERS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Only active versions (only DMS relevant)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_ONLY_REL_VERS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Only released versions (only DMS relevant)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_REFRESH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Refresh buffer (use const of MO_ARCH_FILTER-&gt;REFRESH_OPT-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_SORT_BY_TIME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Order by creation time (can be much slower than normal!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document instances sorted descending</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_AL_CONT</CMPNAME>
+     <SCONAME>IT_FILTER_AL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter for ArchiveLink (use const C_AL_FILT_*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_AL_CONT</CMPNAME>
+     <SCONAME>IV_SORT_BY_TIME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Order by creation time (can be much slower than normal!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_AL_CONT</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_AL_CONT</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
+     <SCONAME>EV_ARCHIV_ID</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Content Repository Identification</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
+     <SCONAME>EV_DOC_CLASS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP ArchiveLink: Document class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
+     <SCONAME>IV_DOC_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP ArchiveLink: Document type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
+     <SCONAME>IV_SAP_OBJECT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP ArchiveLink: Object type of business object</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DMS_CONT</CMPNAME>
+     <SCONAME>IS_FILTER_DMS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter for DMS (see method documentation; use C_DMS_FILT_*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DMS_CONT</CMPNAME>
+     <SCONAME>IV_ONLY_ACT_VERS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Only active versions (only DMS relevant)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DMS_CONT</CMPNAME>
+     <SCONAME>IV_ONLY_REL_VERS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Only released versions (only DMS relevant)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DMS_CONT</CMPNAME>
+     <SCONAME>IV_SORT_BY_TIME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Order by creation time (can be much slower than normal!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DMS_CONT</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DMS_CONT</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>IS_BO_KEY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Archive Business Object key - BOR Compatible</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>IS_LPOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Business class key - technical WF key</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>IV_MANDT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Client (if cross-client usage)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Created instance or found in buffer</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>ZCX_CA_AL_CONT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>ZCX_CA_PARAM</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VIEWER_DEFAULT_BUTTON</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Button / function list</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>HAS_CONTENT</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Documents exist to BO</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>NEW_DOCUMENT_STORED</CMPNAME>
+     <SCONAME>COUNTER_BEFORE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document counter was before refresh</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>NEW_DOCUMENT_STORED</CMPNAME>
+     <SCONAME>COUNTER_NOW</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document counter is now after refresh</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>NEW_DOCUMENT_STORED</CMPNAME>
+     <SCONAME>REFRESH_WITH_OPT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Refresh was executed with this option -&gt; see REFRESH_OPT</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CONTENT</CMPNAME>
+     <SCONAME>IT_DOCS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ArchiveLink and DMS document instances</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+   <ATTRIBUTES>
+    <item>
+     <CMPNAME>MV_KEY</CMPNAME>
+     <ATTKEYFLD>X</ATTKEYFLD>
+     <EXPOSURE>2</EXPOSURE>
+    </item>
+   </ATTRIBUTES>
+  </asx:values>
+ </asx:abap>
+</abapGit>
