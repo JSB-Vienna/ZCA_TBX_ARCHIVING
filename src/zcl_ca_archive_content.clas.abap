@@ -71,8 +71,8 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter is_bo_key    | <p class="shorttext synchronized" lang="en">Archive Business Object key - BOR Compatible</p>
       "! @parameter iv_mandt     | <p class="shorttext synchronized" lang="en">Client (if cross-client usage)</p>
       "! @parameter result       | <p class="shorttext synchronized" lang="en">Created instance or found in buffer</p>
-      "! @raising   zcx_ca_param | <p class="shorttext synchronized" lang="en">Common exception: Parameter error (INHERIT from this excep!)</p>
-      "! @raising   zcx_ca_dbacc | <p class="shorttext synchronized" lang="en">Common exception: Database access</p>
+      "! @raising   zcx_ca_param | <p class="shorttext synchronized" lang="en">CA-TBX exception: Parameter error (INHERIT from this excep!)</p>
+      "! @raising   zcx_ca_dbacc | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
       get_instance
         IMPORTING
           is_lpor       TYPE sibflpor  OPTIONAL
@@ -99,7 +99,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter iv_description | <p class="shorttext synchronized" lang="en">Description (captured by user)</p>
       "! @parameter iv_creator     | <p class="shorttext synchronized" lang="en">User Id of Creator</p>
       "! @parameter result         | <p class="shorttext synchronized" lang="en">CA-TBX: Extended archive connection incl. TOAV0</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       archive
         IMPORTING
           iv_doc_type    TYPE saeobjart
@@ -135,7 +135,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "!
       "! @parameter it_docs                | <p class="shorttext synchronized" lang="en">New documents (= connections)</p>
       "! @parameter iv_refresh             | <p class="shorttext synchronized" lang="en">X=Refresh from DB, D=Add Delta (only new), ' '=Return buffer</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       attach
         IMPORTING
           it_docs    TYPE zca_tt_toav0_ext
@@ -145,7 +145,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Close windows of viewer</p>
       "!
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       close_windows
         RAISING
           zcx_ca_archive_content,
@@ -155,8 +155,8 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter is_lpor      | <p class="shorttext synchronized" lang="en">Business class key - technical WF key</p>
       "! @parameter is_bo_key    | <p class="shorttext synchronized" lang="en">Archive Business Object key - BOR Compatible</p>
       "! @parameter iv_mandt     | <p class="shorttext synchronized" lang="en">Client (if cross-client usage)</p>
-      "! @raising   zcx_ca_param | <p class="shorttext synchronized" lang="en">Common exception: Parameter error (INHERIT from this excep!)</p>
-      "! @raising   zcx_ca_dbacc | <p class="shorttext synchronized" lang="en">Common exception: Database access</p>
+      "! @raising   zcx_ca_param | <p class="shorttext synchronized" lang="en">CA-TBX exception: Parameter error (INHERIT from this excep!)</p>
+      "! @raising   zcx_ca_dbacc | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
       constructor
         IMPORTING
           is_lpor   TYPE sibflpor
@@ -172,8 +172,8 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter io_cont_target   | <p class="shorttext synchronized" lang="en">Target instance</p>
       "! @parameter it_docs          | <p class="shorttext synchronized" lang="en">Preselected conn. of source object - otherwise copy all</p>
       "! @parameter iv_refresh       | <p class="shorttext synchronized" lang="en">X = Refresh buffer and read from DB again</p>
-      "! @raising   zcx_ca_param     | <p class="shorttext synchronized" lang="en">Common exception: Parameter error (INHERIT from this excep!)</p>
-      "! @raising   zcx_ca_dbacc     | <p class="shorttext synchronized" lang="en">Common exception: Database access</p>
+      "! @raising   zcx_ca_param     | <p class="shorttext synchronized" lang="en">CA-TBX exception: Parameter error (INHERIT from this excep!)</p>
+      "! @raising   zcx_ca_dbacc     | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
       copy_to_other_bo
         IMPORTING
           is_bo_key_target TYPE sibflporb OPTIONAL
@@ -189,7 +189,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter it_docs       | <p class="shorttext synchronized" lang="en">Connections to be deleted</p>
       "! @parameter it_filter_al  | <p class="shorttext synchronized" lang="en">Filter for ArchiveLink result - selected in any case</p>
       "! @parameter is_filter_dms | <p class="shorttext synchronized" lang="en">Filter for DMS (see method documentation; use C_DMS_FILT_*)</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       delete
         IMPORTING
           it_docs       TYPE zca_tt_toav0_ext OPTIONAL
@@ -211,7 +211,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter it_buttons        | <p class="shorttext synchronized" lang="en">Visible toolbar buttons (see comment to this method)</p>
       "! @parameter iv_no_toolbar     | <p class="shorttext synchronized" lang="en">X = Hide toolbar</p>
       "! @parameter iv_no_gos_toolbar | <p class="shorttext synchronized" lang="en">X = Hide GOS toolbar</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       display
         IMPORTING
           iv_use_singleton  TYPE abap_bool  DEFAULT abap_false
@@ -248,7 +248,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter iv_only_act_vers | <p class="shorttext synchronized" lang="en">X = Only active versions (only DMS relevant)</p>
       "! @parameter iv_only_rel_vers | <p class="shorttext synchronized" lang="en">X = Only released versions (only DMS relevant)</p>
       "! @parameter result           | <p class="shorttext synchronized" lang="en">Document instances sorted descending</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       get
         IMPORTING
           iv_refresh       TYPE abap_bool DEFAULT zcl_ca_c_archive_content=>refresh_opt-no_refresh
@@ -351,7 +351,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Check key values of Business Object</p>
       "!
       "! @parameter is_bo_key | <p class="shorttext synchronized" lang="en">Business object/class key - BOR Compatible</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       check_bo_key_values
         IMPORTING
           is_bo_key TYPE sibflporb
@@ -385,7 +385,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter it_dms_filter_range      | <p class="shorttext synchronized" lang="en">Passed filter values</p>
       "! @parameter iv_dms_filter_field_name | <p class="shorttext synchronized" lang="en">Filter name = Column name for select</p>
       "! @parameter result                   | <p class="shorttext synchronized" lang="en">Range table</p>
-      "! @raising   zcx_ca_archive_content   | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content   | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       extract_from_filter
         IMPORTING
           it_dms_filter_range      TYPE cl_alink_connection=>toarange_d_tab
@@ -399,7 +399,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "!
       "! @parameter iv_sort_by_time | <p class="shorttext synchronized" lang="en">X = Order by creation time (can be much slower than normal!)</p>
       "! @parameter it_filter_al    | <p class="shorttext synchronized" lang="en">Filter for ArchiveLink (use const C_AL_FILT_*)</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       get_al_cont
         IMPORTING
           iv_sort_by_time TYPE abap_bool DEFAULT abap_false
@@ -413,7 +413,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter iv_sap_object | <p class="shorttext synchronized" lang="en">SAP ArchiveLink: Object type of business object</p>
       "! @parameter ev_doc_class  | <p class="shorttext synchronized" lang="en">SAP ArchiveLink: Document class</p>
       "! @parameter ev_archiv_id  | <p class="shorttext synchronized" lang="en">Content Repository Identification</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       get_archive_id
         IMPORTING
           iv_doc_type   TYPE saeobjart
@@ -430,7 +430,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! @parameter is_filter_dms    | <p class="shorttext synchronized" lang="en">Filter for DMS (see method documentation; use C_DMS_FILT_*)</p>
       "! @parameter iv_only_act_vers | <p class="shorttext synchronized" lang="en">X = Only active versions (only DMS relevant)</p>
       "! @parameter iv_only_rel_vers | <p class="shorttext synchronized" lang="en">X = Only released versions (only DMS relevant)</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling Archive content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
       get_dms_cont
         IMPORTING
           iv_sort_by_time  TYPE abap_bool DEFAULT abap_false
