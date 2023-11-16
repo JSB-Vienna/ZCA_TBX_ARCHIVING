@@ -358,7 +358,7 @@
      <CMPNAME>ARCHIVE</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>ARCHIVE_VIA_DND_DIALOG</CMPNAME>
@@ -394,7 +394,7 @@
      <CMPNAME>ATTACH</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CHECK_BO_KEY_VALUES</CMPNAME>
@@ -406,7 +406,7 @@
      <CMPNAME>CHECK_BO_KEY_VALUES</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CHECK_EXISTENCE</CMPNAME>
@@ -430,7 +430,7 @@
      <CMPNAME>CLOSE_WINDOWS</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
@@ -460,13 +460,13 @@
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>ZCX_CA_DBACC</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Database access</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>ZCX_CA_PARAM</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
@@ -502,13 +502,13 @@
      <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
      <SCONAME>ZCX_CA_DBACC</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Database access</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
      <SCONAME>ZCX_CA_PARAM</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DELETE</CMPNAME>
@@ -538,7 +538,7 @@
      <CMPNAME>DELETE</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DETERMINE_BINARY_DOC_LENGTH</CMPNAME>
@@ -616,7 +616,7 @@
      <CMPNAME>DISPLAY</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>EXTRACT_FROM_FILTER</CMPNAME>
@@ -640,7 +640,7 @@
      <CMPNAME>EXTRACT_FROM_FILTER</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET</CMPNAME>
@@ -694,7 +694,7 @@
      <CMPNAME>GET</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_AL_CONT</CMPNAME>
@@ -718,7 +718,7 @@
      <CMPNAME>GET_AL_CONT</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
@@ -754,7 +754,7 @@
      <CMPNAME>GET_ARCHIVE_ID</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_DMS_CONT</CMPNAME>
@@ -790,7 +790,7 @@
      <CMPNAME>GET_DMS_CONT</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling Archive content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
@@ -826,13 +826,13 @@
      <CMPNAME>GET_INSTANCE</CMPNAME>
      <SCONAME>ZCX_CA_DBACC</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Database access</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
      <SCONAME>ZCX_CA_PARAM</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Parameter error (INHERIT from this excep!)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_VIEWER_DEFAULT_BUTTON</CMPNAME>
