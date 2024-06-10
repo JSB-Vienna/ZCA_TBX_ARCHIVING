@@ -168,18 +168,20 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Copy content to other business object</p>
       "!
-      "! @parameter is_bo_key_target | <p class="shorttext synchronized" lang="en">Business object/class key - BOR Compatible</p>
-      "! @parameter io_cont_target   | <p class="shorttext synchronized" lang="en">Target instance</p>
-      "! @parameter it_docs          | <p class="shorttext synchronized" lang="en">Preselected conn. of source object - otherwise copy all</p>
-      "! @parameter iv_refresh       | <p class="shorttext synchronized" lang="en">X = Refresh buffer and read from DB again</p>
-      "! @raising   zcx_ca_param     | <p class="shorttext synchronized" lang="en">CA-TBX exception: Parameter error (INHERIT from this excep!)</p>
-      "! @raising   zcx_ca_dbacc     | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
+      "! @parameter is_bo_key_target    | <p class="shorttext synchronized" lang="en">Business object/class key - BOR Compatible</p>
+      "! @parameter io_cont_target      | <p class="shorttext synchronized" lang="en">Target instance</p>
+      "! @parameter it_docs             | <p class="shorttext synchronized" lang="en">Preselected conn. of source object - otherwise copy all</p>
+      "! @parameter it_doc_type_mapping | <p class="shorttext synchronized" lang="en">Document type mappings for document copies</p>
+      "! @parameter iv_refresh          | <p class="shorttext synchronized" lang="en">X = Refresh buffer and read from DB again</p>
+      "! @raising   zcx_ca_param        | <p class="shorttext synchronized" lang="en">CA-TBX exception: Parameter error (INHERIT from this excep!)</p>
+      "! @raising   zcx_ca_dbacc        | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
       copy_to_other_bo
         IMPORTING
-          is_bo_key_target TYPE sibflporb OPTIONAL
-          io_cont_target   TYPE REF TO zcl_ca_archive_content OPTIONAL
-          it_docs          TYPE zca_tt_toav0_ext OPTIONAL
-          iv_refresh       TYPE abap_bool DEFAULT zcl_ca_c_archive_content=>refresh_opt-refresh_from_db
+          is_bo_key_target    TYPE sibflporb OPTIONAL
+          io_cont_target      TYPE REF TO zcl_ca_archive_content OPTIONAL
+          it_docs             TYPE zca_tt_toav0_ext OPTIONAL
+          it_doc_type_mapping TYPE zca_tt_doc_type_mappings OPTIONAL
+          iv_refresh          TYPE abap_bool DEFAULT zcl_ca_c_archive_content=>refresh_opt-refresh_from_db
         RAISING
           zcx_ca_param
           zcx_ca_dbacc,
@@ -953,6 +955,15 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
       ENDLOOP.
     ENDIF.
 
+    IF it_doc_type_mapping IS NOT INITIAL.
+      LOOP AT lt_docs REFERENCE INTO DATA(lr_doc).
+        DATA(lr_doc_type_mapping) = REF #( it_doc_type_mapping[ ar_object_from = lr_doc->ar_object ] OPTIONAL ).
+        IF lr_doc_type_mapping IS BOUND.
+          lr_doc->ar_object = lr_doc_type_mapping->ar_object_to.
+        ENDIF.
+      ENDLOOP.
+    ENDIF.
+
     "Attach new documents to target object
     lo_cont_target->attach( it_docs    = lt_docs
                             iv_refresh = iv_refresh ).
@@ -1043,9 +1054,15 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     WHILE _last_line_of_document-line+1023(1) EQ _hex_null.
       SHIFT _last_line_of_document-line RIGHT BY 1 PLACES IN BYTE MODE.
       DATA(_counted_hex_null_at_line_end) = sy-index.
+
+      IF sy-index GE 1024.  "Emergency exit
+        EXIT.
+      ENDIF.
     ENDWHILE.
 
-    result = result + ( 1024 - _counted_hex_null_at_line_end ).
+    IF _counted_hex_null_at_line_end LT 1024.
+      result = result + ( 1024 - _counted_hex_null_at_line_end ).
+    ENDIF.
   ENDMETHOD.                    "determine_binary_doc_length
 
 

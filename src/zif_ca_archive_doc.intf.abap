@@ -4,8 +4,8 @@ INTERFACE zif_ca_archive_doc PUBLIC.
   CONSTANTS:
     "! <p class="shorttext synchronized" lang="en">URL Addition to force the display by a specific application</p>
     BEGIN OF cs_url_addition,
-      force_ascii TYPE string VALUE `&forceMimeType=application/x-ascii` ##NO_TEXT,
-      force_pdf   TYPE string VALUE `&forceMimeType=application/pdf` ##NO_TEXT,
+      force_ascii TYPE string VALUE `&forceMimeType=application/x-ascii` ##no_text,
+      force_pdf   TYPE string VALUE `&forceMimeType=application/pdf` ##no_text,
     END OF cs_url_addition.
 
 * i n s t a n c e   a t t r i b u t e s

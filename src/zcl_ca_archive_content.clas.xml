@@ -488,6 +488,12 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
+     <SCONAME>IT_DOC_TYPE_MAPPING</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document type mappings for document copies</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>COPY_TO_OTHER_BO</CMPNAME>
      <SCONAME>IV_REFRESH</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Refresh buffer and read from DB again</DESCRIPT>
