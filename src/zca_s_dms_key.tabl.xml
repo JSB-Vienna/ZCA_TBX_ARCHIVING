@@ -4,7 +4,7 @@
   <asx:values>
    <DD02V>
     <TABNAME>ZCA_S_DMS_KEY</TABNAME>
-    <DDLANGUAGE>E</DDLANGUAGE>
+    <DDLANGUAGE>D</DDLANGUAGE>
     <TABCLASS>INTTAB</TABCLASS>
     <LANGDEP>X</LANGDEP>
     <DDTEXT>CA-TBX: DMS key values</DDTEXT>
@@ -17,7 +17,7 @@
      <ADMINFIELD>0</ADMINFIELD>
      <PRECFIELD>BAPI_DOC_KEYS</PRECFIELD>
      <MASK>      S</MASK>
-     <DDTEXT>BAPIS DMS: document key</DDTEXT>
+     <DDTEXT>BAPIS-DVS: Dokumentschlüssel</DDTEXT>
      <COMPTYPE>S</COMPTYPE>
      <GROUPNAME>S_DRAW_KEY</GROUPNAME>
     </DD03P>
@@ -34,6 +34,15 @@
      <COMPTYPE>E</COMPTYPE>
     </DD03P>
    </DD03P_TABLE>
+   <I18N_LANGS>
+    <LANGU>E</LANGU>
+   </I18N_LANGS>
+   <DD02_TEXTS>
+    <item>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DDTEXT>CA-TBX: DMS key values</DDTEXT>
+    </item>
+   </DD02_TEXTS>
   </asx:values>
  </asx:abap>
 </abapGit>

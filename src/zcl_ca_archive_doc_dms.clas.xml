@@ -4,7 +4,7 @@
   <asx:values>
    <VSEOCLASS>
     <CLSNAME>ZCL_CA_ARCHIVE_DOC_DMS</CLSNAME>
-    <LANGU>E</LANGU>
+    <LANGU>D</LANGU>
     <DESCRIPT>CA-TBX: Archive content: DMS document</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
@@ -19,11 +19,40 @@
      <LENGTH>40</LENGTH>
     </item>
    </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>E</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>NDF</KEY>
+       <ENTRY>No description found</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <DESCRIPTIONS_CLASS>
+    <SEOCLASSTX>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Archive content: DMS document</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_CLASS>
    <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_BO_DRAW</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Create BO DRAW or its delegation counterpart</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CREATE_BO_DRAW</CMPNAME>
@@ -32,8 +61,23 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get active document version</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Get active document version</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ARCHIVE_ID_2_STORAGE_CAT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get ArchiveLink archive Id to storage category</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DOC_STATUS_INFO</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get document status information</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>GET_DOC_STATUS_INFO</CMPNAME>
@@ -42,8 +86,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>GET_DRAW_DATA</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get DMS object data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DRAW_DATA</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Get DMS object data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_KEY</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Key attribute - Document management system (DMS) key</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MS_KEY</CMPNAME>
@@ -55,8 +109,20 @@
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>IO_PARENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ArchiveLink + DMS: Archived content of a business object</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IO_PARENT</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>ArchiveLink + DMS: Archived content of a business object</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IS_CONNECTION</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Connection entry (= document details)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
@@ -67,20 +133,44 @@
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>IV_MANDT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Client (if cross-client usage)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_MANDT</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Client (if cross-client usage)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_BO_DRAW</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CREATE_BO_DRAW</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Active document version</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
@@ -91,20 +181,38 @@
     <SEOSUBCOTX>
      <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ACTIVE_VERSION</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DOC_STATUS_INFO</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_DOC_STATUS_INFO</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DRAW_DATA</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_DRAW_DATA</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
     </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>

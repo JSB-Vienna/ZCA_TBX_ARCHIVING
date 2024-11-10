@@ -3,18 +3,18 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DD04V>
-    <ROLLNAME>ZCA_D_DOC_IS_RELEASED</ROLLNAME>
+    <ROLLNAME>ZCA_D_DOC_IS_ARCHIVED</ROLLNAME>
     <DDLANGUAGE>D</DDLANGUAGE>
     <DOMNAME>FLAG</DOMNAME>
     <HEADLEN>10</HEADLEN>
     <SCRLEN1>10</SCRLEN1>
     <SCRLEN2>20</SCRLEN2>
     <SCRLEN3>40</SCRLEN3>
-    <DDTEXT>CA-TBX: X = Dokument ist freigegeben</DDTEXT>
-    <REPTEXT>Freig.</REPTEXT>
-    <SCRTEXT_S>Freig.</SCRTEXT_S>
-    <SCRTEXT_M>Dok. ist freigegeben</SCRTEXT_M>
-    <SCRTEXT_L>Dokument ist freigegeben</SCRTEXT_L>
+    <DDTEXT>CA-TBX: X = Dokument ist aktiv</DDTEXT>
+    <REPTEXT>Aktiv</REPTEXT>
+    <SCRTEXT_S>Aktiv</SCRTEXT_S>
+    <SCRTEXT_M>Dok. ist aktiv</SCRTEXT_M>
+    <SCRTEXT_L>Dokument ist aktiv</SCRTEXT_L>
     <DTELMASTER>E</DTELMASTER>
     <REFKIND>D</REFKIND>
    </DD04V>
@@ -24,11 +24,11 @@
    <DD04_TEXTS>
     <item>
      <DDLANGUAGE>E</DDLANGUAGE>
-     <DDTEXT>CA-TBX: X = Document is released</DDTEXT>
-     <REPTEXT>Rel.</REPTEXT>
-     <SCRTEXT_S>Rel.</SCRTEXT_S>
-     <SCRTEXT_M>Doc. is released</SCRTEXT_M>
-     <SCRTEXT_L>Document is released</SCRTEXT_L>
+     <DDTEXT>CA-TBX: X = Document is archived (DMS doc. can be elsewhere)</DDTEXT>
+     <REPTEXT>Archived</REPTEXT>
+     <SCRTEXT_S>Archived</SCRTEXT_S>
+     <SCRTEXT_M>Doc. is archived</SCRTEXT_M>
+     <SCRTEXT_L>Document is archived</SCRTEXT_L>
     </item>
    </DD04_TEXTS>
   </asx:values>

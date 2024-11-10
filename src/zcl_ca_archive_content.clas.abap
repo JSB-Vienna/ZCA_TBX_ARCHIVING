@@ -86,7 +86,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
 
 *   i n s t a n c e   m e t h o d s
     METHODS:
-      "! <p class="shorttext synchronized" lang="en">Archive a new object</p>
+      "! <p class="shorttext synchronized" lang="en">Archive a new object (currently for ArchiveLink only!)</p>
       "!
       "! @parameter iv_doc_type    | <p class="shorttext synchronized" lang="en">SAP ArchiveLink: Document type</p>
       "! @parameter iv_doc_class   | <p class="shorttext synchronized" lang="en">SAP ArchiveLink: Document class</p>
@@ -131,7 +131,7 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
         RAISING
           zcx_ca_archive_content,
 
-      "! <p class="shorttext synchronized" lang="en">Attach docs to business object (this deletes filters!)</p>
+      "! <p class="shorttext synchronized" lang="en">Attach docs to business object (curr. for ArchiveLink only!)</p>
       "!
       "! @parameter it_docs                | <p class="shorttext synchronized" lang="en">New documents (= connections)</p>
       "! @parameter iv_refresh             | <p class="shorttext synchronized" lang="en">X=Refresh from DB, D=Add Delta (only new), ' '=Return buffer</p>
@@ -237,16 +237,16 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "! necessary. Then the time is read from the archive object metadata which decreases the performance,
       "! may be immensely.</p>
       "!
-      "! <p>Hint for <strong>filter usage for DMS</strong>: Fill at least table T_SEL_DRAD with the pairs of
-      "! object type (DOKOB) and key (OBJKY) to get a result. Any initial or generic value is ignored, since
-      "! these slow down the performance drastically. In table T_FILTER the result can be more detailed. The
-      "! fields DOKOB and OBJKY here will be ignored. Please use for the field name the prepared constants
-      "! MO_ARCH_FILTER-&gt;DMS_FILTER-*.</p>
-      "!
       "! @parameter iv_refresh       | <p class="shorttext synchronized" lang="en">Refresh buffer (use const of MO_ARCH_FILTER-&gt;REFRESH_OPT-*)</p>
       "! @parameter iv_sort_by_time  | <p class="shorttext synchronized" lang="en">X = Order by creation time (can be much slower than normal!)</p>
       "! @parameter it_filter_al     | <p class="shorttext synchronized" lang="en">Filter for ArchiveLink (const MO_ARCH_FILTER-&gt;AL_FILTER-*)</p>
       "! @parameter is_filter_dms    | <p class="shorttext synchronized" lang="en">Filter for DMS (see documentation of this method)</p>
+      "! <p><strong>Hint to filter usage</strong>: Fill at least table T_SEL_DRAD of this parameter with the pairs
+      "! of object type (DOKOB) and key (OBJKY) to get a result. Any initial or generic value is ignored,
+      "! since these slow down the performance drastically. In table T_FILTER of this parameter the result can be
+      "! more detailed. The fields DOKOB and OBJKY here will be ignored as they are defined in T_SEL_DRAD. Please
+      "! use for the field name the prepared constants MO_ARCH_FILTER-&gt;DMS_FILTER-*.</p>
+      "!
       "! @parameter iv_only_act_vers | <p class="shorttext synchronized" lang="en">X = Only active versions (only DMS relevant)</p>
       "! @parameter iv_only_rel_vers | <p class="shorttext synchronized" lang="en">X = Only released versions (only DMS relevant)</p>
       "! @parameter result           | <p class="shorttext synchronized" lang="en">Document instances sorted descending</p>
@@ -277,6 +277,16 @@ CLASS zcl_ca_archive_content DEFINITION PUBLIC
       "!
       "! @parameter result | <p class="shorttext synchronized" lang="en">X = Documents exist to BO</p>
       has_content
+        RETURNING
+          VALUE(result) TYPE abap_bool,
+
+      "! <p class="shorttext synchronized" lang="en">Check whether the document is already buffered</p>
+      "!
+      "! @parameter iv_file_id | <p class="shorttext synchronized" lang="en">Physical document Id (= archive document Id)</p>
+      "! @parameter result     | <p class="shorttext synchronized" lang="en">X = Document is in buffer</p>
+      is_document_already_buffered
+        IMPORTING
+          iv_file_id    TYPE sdok_phid
         RETURNING
           VALUE(result) TYPE abap_bool,
 
@@ -481,7 +491,7 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
   METHOD archive.
     "-----------------------------------------------------------------*
-    "   Archive a new object
+    "   Archive a new object (currently for ArchiveLink only!)
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
@@ -511,13 +521,11 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     IF lv_doc_class_passed IS NOT INITIAL AND
        lv_doc_class_passed NE lv_doc_class_from_customizing.
       "Passed doc. class &1 does not correspond to doc.class &2 of doc.type &3
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>doctype_not_corresponding
-          mv_msgty = c_msgty_e
-          mv_msgv1 = CONV #( lv_doc_class_passed )
-          mv_msgv2 = CONV #( lv_doc_class_from_customizing )
-          mv_msgv3 = CONV #( iv_doc_type ).
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>doctype_not_corresponding
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = CONV #( lv_doc_class_passed )
+                                                  mv_msgv2 = CONV #( lv_doc_class_from_customizing )
+                                                  mv_msgv3 = CONV #( iv_doc_type ) ).
     ENDIF.
 
     TRY.
@@ -552,13 +560,11 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
         ELSE.
           "At least one of the following parameters must be set: &MSGV1& &MSGV2& &MSGV3& &MSGV4&
-          RAISE EXCEPTION TYPE zcx_ca_archive_content
-            EXPORTING
-              textid   = zcx_ca_archive_content=>at_least_one
-              mv_msgty = c_msgty_e
-              mv_msgv1 = 'IV_DOC'
-              mv_msgv2 = 'IT_DOC_BIN'
-              mv_msgv3 = 'IT_DOC_CHAR' ##no_text.
+          RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>at_least_one
+                                                      mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                      mv_msgv1 = 'IV_DOC'
+                                                      mv_msgv2 = 'IT_DOC_BIN'
+                                                      mv_msgv3 = 'IT_DOC_CHAR' ) ##no_text.
         ENDIF.
 
       CATCH cx_bcs INTO DATA(lx_catched).
@@ -609,23 +615,22 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
     ELSEIF result-arc_doc_id IS INITIAL.
       "No links passed which could be entered
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>no_links_passed
-          mv_msgty = c_msgty_e.
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>no_links_passed
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e ).
     ENDIF.
 
     "Link document
     IF iv_link_immed EQ abap_true.
       "Create document instance and link to object if requested
-      DATA(lo_doc) = zcl_ca_archive_doc=>get_instance( io_parent     = me
-                                                       is_connection = result
-                                                       iv_mandt      = mv_mandt ).
-      lo_doc->insert( iv_filename    = result-filename
-                      iv_description = result-descr
-                      iv_creator     = result-creator ).
-      INSERT lo_doc INTO  mt_docs
-                    INDEX 1.
+      DATA(lo_document) = CAST zif_ca_archive_doc( NEW zcl_ca_archive_doc_arch_link(
+                                                                io_parent       = me
+                                                                is_connection   = CORRESPONDING #( result )
+                                                                iv_mandt        = mv_mandt ) ).
+      lo_document->insert( iv_filename    = result-filename
+                           iv_description = result-descr
+                           iv_creator     = result-creator ).
+      INSERT lo_document INTO  mt_docs
+                         INDEX 1.
 
       DATA(_number_of_docs_before) = mv_count.
       mv_count += 1.
@@ -666,54 +671,51 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
   METHOD attach.
     "-----------------------------------------------------------------*
-    "   Attach docs to business object (this deletes filters!)
+    "   Attach docs to business object (curr. for ArchiveLink only!) (this deletes filters!)
     "-----------------------------------------------------------------*
     "Actualize documents of object
     get( iv_refresh = mo_arch_filter->refresh_opt-refresh_from_db ).
 
     "Insert new documents
-    LOOP AT it_docs INTO DATA(ls_doc).
+    LOOP AT it_docs REFERENCE INTO DATA(lr_doc_connection).
       "Archiv and document id and document type must be set
-      IF ls_doc-archiv_id IS INITIAL.
+      IF lr_doc_connection->archiv_id IS INITIAL.
         "Parameter '&1' has invalid value '&2'
-        RAISE EXCEPTION TYPE zcx_ca_archive_content
-          EXPORTING
-            textid   = zcx_ca_archive_content=>param_invalid
-            mv_msgty = c_msgty_e
-            mv_msgv1 = 'SPACE'
-            mv_msgv2 = 'IT_DOCS-ARCHIV_ID' ##no_text.
+        RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>param_invalid
+                                                    mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                    mv_msgv1 = 'SPACE'
+                                                    mv_msgv2 = 'IT_DOCS-ARCHIV_ID' ) ##no_text.
       ENDIF.
 
-      IF ls_doc-arc_doc_id IS INITIAL.
+      IF lr_doc_connection->arc_doc_id IS INITIAL.
         "Parameter '&1' has invalid value '&2'
-        RAISE EXCEPTION TYPE zcx_ca_archive_content
-          EXPORTING
-            textid   = zcx_ca_archive_content=>param_invalid
-            mv_msgty = c_msgty_e
-            mv_msgv1 = 'SPACE'
-            mv_msgv2 = 'IT_DOCS-ARC_DOC_ID' ##no_text.
+        RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>param_invalid
+                                                    mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                    mv_msgv1 = 'SPACE'
+                                                    mv_msgv2 = 'IT_DOCS-ARC_DOC_ID' ) ##no_text.
       ENDIF.
 
       "Check it if this object is already linked
       LOOP AT mt_docs TRANSPORTING NO FIELDS
-                      WHERE table_line->ms_data-archiv_id  EQ ls_doc-archiv_id
-                        AND table_line->ms_data-arc_doc_id EQ ls_doc-arc_doc_id ##needed.
+                      WHERE table_line->ms_data-archiv_id  EQ lr_doc_connection->archiv_id
+                        AND table_line->ms_data-arc_doc_id EQ lr_doc_connection->arc_doc_id ##needed.
 
       ENDLOOP.
       IF sy-subrc NE 0.
         "If document wasn't found insert document to content
         "Set object and key of current instance
-        ls_doc-sap_object = ms_bo_key-typeid.
-        ls_doc-object_id  = ms_bo_key-instid.
+        lr_doc_connection->sap_object = ms_bo_key-typeid.
+        lr_doc_connection->object_id  = ms_bo_key-instid.
 
-        DATA(lo_doc) = zcl_ca_archive_doc=>get_instance( io_parent     = me
-                                                         is_connection = ls_doc
-                                                         iv_mandt      = mv_mandt ).
-        lo_doc->insert( iv_filename    = ls_doc-filename
-                        iv_description = ls_doc-descr
-                        iv_creator     = ls_doc-creator ).
+        DATA(lo_document) = CAST zif_ca_archive_doc( NEW zcl_ca_archive_doc_arch_link(
+                                                                  io_parent       = me
+                                                                  is_connection   = lr_doc_connection->*
+                                                                  iv_mandt        = mv_mandt ) ).
+        lo_document->insert( iv_filename    = lr_doc_connection->filename
+                             iv_description = lr_doc_connection->descr
+                             iv_creator     = lr_doc_connection->creator ).
 
-        APPEND lo_doc TO mt_docs.
+        APPEND lo_document TO mt_docs.
       ENDIF.
     ENDLOOP.
 
@@ -796,21 +798,17 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     "Currently only classic Business objects can be linked to either ArchiveLink or DMS
     IF is_bo_key-catid NE swfco_objtype_bor.
       "Parameter '&1' has invalid value '&2'
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>param_invalid
-          mv_msgty = c_msgty_e
-          mv_msgv1 = 'IS_BO_KEY-CATID'
-          mv_msgv2 = CONV #( is_bo_key-catid ) ##no_text.
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>param_invalid
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = 'IS_BO_KEY-CATID'
+                                                  mv_msgv2 = CONV #( is_bo_key-catid ) ) ##no_text.
     ENDIF.
 
     IF is_bo_key-instid IS INITIAL.
       "Parameter '&1' is not specified
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>param_not_supplied
-          mv_msgty = c_msgty_e
-          mv_msgv1 = 'IS_BO_KEY-INSTID' ##no_text.
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>param_not_supplied
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = 'IS_BO_KEY-INSTID' ) ##no_text.
     ENDIF.
   ENDMETHOD.                    "check_bo_key_values
 
@@ -849,22 +847,18 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                       WHERE mandt EQ @iv_mandt.
     IF exists EQ abap_false.
       "Parameter '&1' has invalid value '&2'
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>param_invalid
-          mv_msgty = c_msgty_e
-          mv_msgv1 = 'IV_MANDT'
-          mv_msgv2 = CONV #( iv_mandt ) ##no_text.
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>param_invalid
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = 'IV_MANDT'
+                                                  mv_msgv2 = CONV #( iv_mandt ) ) ##no_text.
     ENDIF.
 
     "Check key length, since archive connections can only save 50 digits
     IF strlen( is_bo_key-instid ) GT 50.
       "Key is too long (max. & characters)
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>key_too_long
-          mv_msgty = c_msgty_e
-          mv_msgv1 = CONV #( 50 ).
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>key_too_long
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = CONV #( 50 ) ).
     ENDIF.
 
     "Check business object
@@ -874,11 +868,9 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                       AND active EQ @abap_true.
     IF sy-subrc NE 0.
       "SAP business object &1 does not exist or is not activated
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>bo_not_exist
-          mv_msgty = c_msgty_e
-          mv_msgv1 = CONV #( is_bo_key-typeid ).
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>bo_not_exist
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = CONV #( is_bo_key-typeid ) ).
     ENDIF.
 
     "Get short descriptions
@@ -935,12 +927,10 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
     ELSE.
       "At least one of the following parameters must be passed: &1 &2 &3 &4
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>at_least_one
-          mv_msgty = c_msgty_e
-          mv_msgv1 = 'IS_BO_KEY_TARGET'
-          mv_msgv2 = 'IO_CONT_TARGET' ##no_text.
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>at_least_one
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = 'IS_BO_KEY_TARGET'
+                                                  mv_msgv2 = 'IO_CONT_TARGET' ) ##no_text.
     ENDIF.
 
     "Use passed documents ...
@@ -989,13 +979,11 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                                   OTHERS    = 2 ).
         "Reaction only for internal errors
         IF sy-subrc GE 2.
-          lx_error =
-               CAST zcx_ca_archive_content(
-                         zcx_ca_error=>create_exception(
-                                 iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
-                                 iv_class    = 'CL_ALINK_CONNECTION'
-                                 iv_method   = 'DELETE'
-                                 iv_subrc    = sy-subrc ) )  ##no_text.
+          lx_error = CAST zcx_ca_archive_content( zcx_ca_error=>create_exception(
+                                                       iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+                                                       iv_class    = 'CL_ALINK_CONNECTION'
+                                                       iv_method   = 'DELETE'
+                                                       iv_subrc    = sy-subrc ) )  ##no_text.
           IF lx_error IS BOUND.
             RAISE EXCEPTION lx_error.
           ENDIF.
@@ -1016,13 +1004,11 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                                   OTHERS    = 2 ).
         "Reaction only for internal errors
         IF sy-subrc GE 2.
-          lx_error =
-               CAST zcx_ca_archive_content(
-                         zcx_ca_error=>create_exception(
-                                 iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
-                                 iv_class    = 'CL_ALINK_CONNECTION'
-                                 iv_method   = 'DELETE'
-                                 iv_subrc    = sy-subrc ) )  ##no_text.
+          lx_error = CAST zcx_ca_archive_content( zcx_ca_error=>create_exception(
+                                                       iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+                                                       iv_class    = 'CL_ALINK_CONNECTION'
+                                                       iv_method   = 'DELETE'
+                                                       iv_subrc    = sy-subrc ) )  ##no_text.
           IF lx_error IS BOUND.
             RAISE EXCEPTION lx_error.
           ENDIF.
@@ -1115,29 +1101,28 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
         "Create window Id from LPOR
         mv_window_id = ms_lpor-instid+10(10).
-        LOOP AT mt_docs ASSIGNING FIELD-SYMBOL(<lo_doc>).
-          APPEND VALUE #( adid = <lo_doc>->ms_data-arc_doc_id
-                          aid  = <lo_doc>->ms_data-archiv_id
+        LOOP AT mt_docs INTO DATA(lo_documument)
+                        WHERE table_line->ms_data-is_archived EQ abap_true.
+          APPEND VALUE #( adid = lo_documument->ms_data-arc_doc_id
+                          aid  = lo_documument->ms_data-archiv_id
                           wid  = mv_window_id
-                          wti  = COND #( WHEN <lo_doc>->ms_data-descr IS NOT INITIAL
-                                           THEN <lo_doc>->ms_data-descr
-                                         WHEN <lo_doc>->ms_data-filename IS NOT INITIAL
-                                           THEN <lo_doc>->ms_data-filename
-                                         ELSE <lo_doc>->ms_doc_type_descr-objecttext )
-                          dcl  = <lo_doc>->ms_data-reserve
-                          oti  = <lo_doc>->ms_data-sap_object
-                          oid  = <lo_doc>->ms_data-object_id
-                          dti  = <lo_doc>->ms_data-ar_object ) TO lt_disp_docs.
+                          wti  = COND #( WHEN lo_documument->ms_data-descr IS NOT INITIAL
+                                           THEN lo_documument->ms_data-descr
+                                         WHEN lo_documument->ms_data-filename IS NOT INITIAL
+                                           THEN lo_documument->ms_data-filename
+                                         ELSE lo_documument->ms_doc_type_descr-objecttext )
+                          dcl  = lo_documument->ms_data-reserve
+                          oti  = lo_documument->ms_data-sap_object
+                          oid  = lo_documument->ms_data-object_id
+                          dti  = lo_documument->ms_data-ar_object ) TO lt_disp_docs.
         ENDLOOP.
 
         mo_viewer->disp_ao_docs( lt_disp_docs ).
 
       CATCH cx_dv_exception INTO DATA(lx_error).
-        DATA(lx_al_err) =
-              CAST zcx_ca_archive_content(
-                       zcx_ca_error=>create_exception(
-                                 iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
-                                 ix_error    = lx_error ) )  ##no_text.
+        DATA(lx_al_err) = CAST zcx_ca_archive_content( zcx_ca_error=>create_exception(
+                                                           iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+                                                           ix_error    = lx_error ) )  ##no_text.
         IF lx_al_err IS BOUND.
           RAISE EXCEPTION lx_al_err.
         ENDIF.
@@ -1234,11 +1219,6 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Get ArchiveLink content
     "-----------------------------------------------------------------*
-    "Local data definitions
-    DATA:
-      lo_document TYPE REF TO zif_ca_archive_doc,
-      ls_conn     TYPE toav0.
-
     "Since this class base on a single BO the filter parameter of
     "BO name (SAP_OBJECT) and key (OBJECT_ID) have to be deleted.
     DATA(lt_filter_al) = it_filter_al.
@@ -1253,7 +1233,7 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                            parameter        = lt_filter_al
                          IMPORTING
                            count            = mv_count
-                           connections      = DATA(lt_conns)
+                           connections      = DATA(lt_connections)
                          EXCEPTIONS
                            not_found        = 1
                            error_authorithy = 2
@@ -1262,25 +1242,25 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     CASE sy-subrc.
       WHEN 0 OR 1.
         "Create document instances to each connection
-        LOOP AT lt_conns INTO ls_conn.
+        LOOP AT lt_connections REFERENCE INTO DATA(lr_connection).
           IF mv_refresh NE mo_arch_filter->refresh_opt-refresh_from_db AND
-             line_exists( mt_docs[ table_line->ms_data-archiv_id  = ls_conn-archiv_id
-                                   table_line->ms_data-arc_doc_id = ls_conn-arc_doc_id ] ).
+             line_exists( mt_docs[ table_line->ms_data-archiv_id  = lr_connection->archiv_id
+                                   table_line->ms_data-arc_doc_id = lr_connection->arc_doc_id ] ).
             CONTINUE.
           ENDIF.
 
-          lo_document = zcl_ca_archive_doc=>get_instance(
-                                                    io_parent       = me
-                                                    is_connection   = VALUE #( s_al_conn = ls_conn )
-                                                    iv_sort_by_time = iv_sort_by_time
-                                                    iv_mandt        = mv_mandt ).
+          DATA(lo_document) = CAST zif_ca_archive_doc( NEW zcl_ca_archive_doc_arch_link(
+                                                              io_parent       = me
+                                                              is_connection   = CORRESPONDING #( lr_connection->* )
+                                                              iv_sort_by_time = iv_sort_by_time
+                                                              iv_mandt        = mv_mandt ) ).
           APPEND lo_document TO mt_docs.
         ENDLOOP.
 
         "Were documents deleted or filtered?
         LOOP AT mt_docs INTO lo_document.
-          IF NOT line_exists( lt_conns[ archiv_id  = lo_document->ms_data-archiv_id
-                                        arc_doc_id = lo_document->ms_data-arc_doc_id ] ).
+          IF NOT line_exists( lt_connections[ archiv_id  = lo_document->ms_data-archiv_id
+                                              arc_doc_id = lo_document->ms_data-arc_doc_id ] ).
             DELETE mt_docs.
           ENDIF.
         ENDLOOP.
@@ -1289,13 +1269,11 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
         mt_filter_al = lt_filter_al.
 
       WHEN OTHERS.
-        DATA(lx_error) =
-               CAST zcx_ca_archive_content(
-                       zcx_ca_error=>create_exception(
-                               iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
-                               iv_class    = 'CL_ALINK_CONNECTION'
-                               iv_method   = 'FIND'
-                               iv_subrc    = sy-subrc ) )  ##no_text.
+        DATA(lx_error) = CAST zcx_ca_archive_content( zcx_ca_error=>create_exception(
+                                               iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+                                               iv_class    = 'CL_ALINK_CONNECTION'
+                                               iv_method   = 'FIND'
+                                               iv_subrc    = sy-subrc ) )  ##no_text.
         IF lx_error IS BOUND.
           RAISE EXCEPTION lx_error.
         ENDIF.
@@ -1321,11 +1299,9 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                            WHERE ar_object EQ @iv_doc_type.
     IF sy-subrc NE 0.
       "Document type & does not exist.
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>doc_type_not_exist
-          mv_msgty = c_msgty_e
-          mv_msgv1 = CONV #( iv_doc_type ).
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>doc_type_not_exist
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = CONV #( iv_doc_type ) ).
     ENDIF.
 
     "ATTENTION: This method is from here on a copy of subroutine GIVE_ME_THE_CONTREP
@@ -1378,12 +1354,10 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
     IF ev_archiv_id IS INITIAL.
       "SAP ArchiveLink: Obj. type not assigned to storage syst.(Customizing) & &
-      RAISE EXCEPTION TYPE zcx_ca_archive_content
-        EXPORTING
-          textid   = zcx_ca_archive_content=>doctype_no_assignm_to_arcid
-          mv_msgty = c_msgty_e
-          mv_msgv1 = CONV #( iv_sap_object )
-          mv_msgv2 = CONV #( iv_doc_type ).
+      RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>doctype_no_assignm_to_arcid
+                                                  mv_msgty = zcx_ca_archive_content=>c_msgty_e
+                                                  mv_msgv1 = CONV #( iv_sap_object )
+                                                  mv_msgv2 = CONV #( iv_doc_type ) ).
     ENDIF.
   ENDMETHOD.                    "get_archive_id
 
@@ -1394,12 +1368,9 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
-      lt_dms_keys TYPE zca_tt_dms_keys,
-      lra_dokar   TYPE rsdsselopt_t,
-      lra_doknr   TYPE rsdsselopt_t,
-      lra_dokvr   TYPE rsdsselopt_t,
-      lra_doktl   TYPE rsdsselopt_t,
-      lra_dokst   TYPE rsdsselopt_t.
+      lx_error     TYPE REF TO zcx_ca_archive_content,
+      lt_doc_files TYPE t_bapi_doc_files2,
+      ls_return    TYPE bapiret2.
 
     IF mv_mandt NE cl_abap_syst=>get_client( ).
       "DMS documents can not be read client independent!
@@ -1409,87 +1380,81 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
           mv_msgty = c_msgty_e.
     ENDIF.
 
-    "Check object keys
-    DATA(ls_filter_dms) = is_filter_dms.
-    LOOP AT ls_filter_dms-t_sel_drad ASSIGNING FIELD-SYMBOL(<ls_sel_drad>).
-      IF <ls_sel_drad>-objky IS INITIAL OR
-         <ls_sel_drad>-dokob IS INITIAL.
-        DELETE ls_filter_dms-t_sel_drad.
-      ENDIF.
-    ENDLOOP.
-
-    IF ls_filter_dms-t_sel_drad IS INITIAL.
+    IF ms_bo_key-typeid NE zif_ca_c_wf_bos=>cbo_draw-typeid.
       RETURN.
     ENDIF.
 
-    "Convert filter into ranges
-    lra_dokar = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
-                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_type ).
-    lra_doknr = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
-                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_id ).
-    lra_dokvr = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
-                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_version ).
-    lra_doktl = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
-                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_part ).
-    lra_dokst = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
-                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_state ).
+    DATA(ls_doc_key) = CONV bapi_doc_keys( ms_bo_key-instid ).
+    CALL FUNCTION 'BAPI_DOCUMENT_GETDETAIL2'
+      EXPORTING
+        documenttype       = ls_doc_key-documenttype
+        documentnumber     = ls_doc_key-documentnumber
+        documentpart       = ls_doc_key-documentpart
+        documentversion    = ls_doc_key-documentversion
+        getactivefiles     = iv_only_act_vers
+        getdocdescriptions = abap_false
+        getdocfiles        = abap_true
+      IMPORTING
+        return             = ls_return
+      TABLES
+        documentfiles      = lt_doc_files.
 
-    SELECT dokar AS documenttype,
-           doknr AS documentnumber,
-           dokvr AS documentversion,
-           doktl AS documentpart,
-           dokob,  objky         INTO  CORRESPONDING FIELDS OF TABLE @lt_dms_keys
-                                 FROM  drad
-                                       FOR ALL ENTRIES IN @ls_filter_dms-t_sel_drad
-                                 WHERE dokob EQ @ls_filter_dms-t_sel_drad-dokob
-                                   AND objky EQ @ls_filter_dms-t_sel_drad-objky
-                                   AND dokar IN @lra_dokar
-                                   AND doknr IN @lra_doknr
-                                   AND dokvr IN @lra_dokvr
-                                   AND doktl IN @lra_doktl.
-    IF sy-subrc NE 0.
-      RETURN.
+    lx_error = CAST zcx_ca_archive_content( zcx_ca_error=>create_exception(
+                                                 iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+                                                 iv_function = 'BAPI_DOCUMENT_GETDETAIL2'
+                                                 is_return   = ls_return ) ) ##no_text.
+    IF lx_error IS BOUND.
+      RAISE EXCEPTION lx_error.
     ENDIF.
-
-    "Result table is sorted
-    DELETE ADJACENT DUPLICATES FROM lt_dms_keys COMPARING ALL FIELDS.
 
     "Create and collect documents as requested
     DATA(lv_docs_ignored) = abap_false.
-    LOOP AT lt_dms_keys ASSIGNING FIELD-SYMBOL(<ls_dms_key>).
+    LOOP AT lt_doc_files REFERENCE INTO DATA(lr_doc_file).
+      IF is_document_already_buffered( lr_doc_file->file_id ).
+        CONTINUE.
+      ENDIF.
+
+      "Is an active version required and the document is so?
+      IF iv_only_act_vers            EQ abap_true  AND
+         lr_doc_file->active_version EQ abap_false.
+        lv_docs_ignored = abap_true.
+        CONTINUE.
+      ENDIF.
+
+*      IF iv_only_rel_vers            EQ abap_true  AND
+*         lr_doc_file->active_version EQ abap_false.
+*        lv_docs_ignored = abap_true.
+*        CONTINUE.
+*      ENDIF.
+
+      "Provide document values for connection
+      DATA(ls_connection) = VALUE zca_s_toav0_ext( sap_object  = zif_ca_c_wf_bos=>cbo_draw-typeid
+                                                   object_id   = ms_bo_key-instid
+*                                                   archiv_id   =
+                                                   arc_doc_id  = lr_doc_file->file_id
+                                                   reserve     = to_upper( lr_doc_file->wsapplication )
+                                                   descr       = lr_doc_file->description
+                                                   creator     = lr_doc_file->created_by
+                                                   storage_cat = lr_doc_file->storagecategory
+                                                   s_doc_key   = CORRESPONDING #( ls_doc_key ) ).
+      "DOCFILE contains the path too, so condense the original file name
+      CALL FUNCTION 'CV120_SPLIT_PATH'
+        EXPORTING
+          pf_path  = lr_doc_file->docfile
+        IMPORTING
+          pfx_file = ls_connection-filename.
+
+      CONVERT TIME STAMP CONV timestamp( lr_doc_file->created_at ) TIME ZONE sy-zonlo
+                                                                   INTO DATE ls_connection-ar_date
+                                                                        TIME ls_connection-ar_time.
+
       TRY.
-          IF mv_refresh NE mo_arch_filter->refresh_opt-refresh_from_db AND
-             line_exists( mt_docs[ table_line->ms_data-object_id = <ls_dms_key>-s_draw_key
-                                   table_line->ms_data-dokob     = <ls_dms_key>-dokob
-                                   table_line->ms_data-objky     = <ls_dms_key>-objky ] ).
-            CONTINUE.
-          ENDIF.
+          DATA(lo_document) = CAST zif_ca_archive_doc( NEW zcl_ca_archive_doc_dms( io_parent     = me
+                                                                                   is_connection = ls_connection
+                                                                                   iv_mandt      = mv_mandt ) ).
+          APPEND lo_document TO mt_docs.
 
-          DATA(lo_doc) =
-             zcl_ca_archive_doc=>get_instance(
-                                  io_parent     = me
-                                  is_connection = VALUE #( sap_object = zif_ca_c_wf_bos=>cbo_draw-typeid
-                                                           object_id  = <ls_dms_key>-s_draw_key
-                                                           dokob      = <ls_dms_key>-dokob
-                                                           objky      = <ls_dms_key>-objky ) ).
-
-          IF lo_doc->ms_data-dokst NOT IN lra_dokst.
-            CONTINUE.
-          ENDIF.
-
-          IF iv_only_act_vers         EQ abap_true  AND
-             lo_doc->ms_data-is_activ EQ abap_false.
-            CONTINUE.
-          ENDIF.
-
-          IF iv_only_rel_vers            EQ abap_true  AND
-             lo_doc->ms_data-is_released EQ abap_false.
-            CONTINUE.
-          ENDIF.
-
-          APPEND lo_doc TO mt_docs.
-
-        CATCH zcx_ca_archive_content INTO DATA(lx_error).
+        CATCH zcx_ca_archive_content INTO lx_error.
           IF lx_error->mv_msgty CA zcx_ca_error=>c_msgty_eax.
             RAISE EXCEPTION lx_error.
 
@@ -1499,12 +1464,121 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
       ENDTRY.
     ENDLOOP.
 
-    ms_filter_dms = is_filter_dms.
-
     IF lv_docs_ignored EQ abap_true.
       "Due to validity or release reasons documents were ignored
       MESSAGE s065(zca_toolbox).
     ENDIF.
+
+*    "Local data definitions
+*    DATA:
+*      lt_dms_keys TYPE zca_tt_dms_keys,
+*      lra_dokar   TYPE rsdsselopt_t,
+*      lra_doknr   TYPE rsdsselopt_t,
+*      lra_dokvr   TYPE rsdsselopt_t,
+*      lra_doktl   TYPE rsdsselopt_t,
+*      lra_dokst   TYPE rsdsselopt_t.
+*      ls_return    TYPE bapiret2.
+
+*    "Check object keys
+*    DATA(ls_filter_dms) = is_filter_dms.
+*    LOOP AT ls_filter_dms-t_sel_drad ASSIGNING FIELD-SYMBOL(<ls_sel_drad>).
+*      IF <ls_sel_drad>-objky CA '*+'    OR
+*         <ls_sel_drad>-objky IS INITIAL OR
+*         <ls_sel_drad>-dokob CA '*+'    OR
+*         <ls_sel_drad>-dokob IS INITIAL.
+*        DELETE ls_filter_dms-t_sel_drad.
+*      ENDIF.
+*    ENDLOOP.
+*
+*    IF ls_filter_dms-t_sel_drad IS INITIAL.
+*      RETURN.
+*    ENDIF.
+*
+*    "Convert filter into ranges
+*    lra_dokar = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
+*                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_type ).
+*    lra_doknr = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
+*                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_id ).
+*    lra_dokvr = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
+*                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_version ).
+*    lra_doktl = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
+*                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_part ).
+*    lra_dokst = extract_from_filter( it_dms_filter_range = ls_filter_dms-t_filter
+*                                     iv_dms_filter_field_name  = mo_arch_filter->dms_filter-doc_state ).
+*
+*    SELECT dokar AS documenttype,
+*           doknr AS documentnumber,
+*           dokvr AS documentversion,
+*           doktl AS documentpart,
+*           dokob,  objky         INTO  CORRESPONDING FIELDS OF TABLE @lt_dms_keys
+*                                 FROM  drad
+*                                       FOR ALL ENTRIES IN @ls_filter_dms-t_sel_drad
+*                                 WHERE dokob EQ @ls_filter_dms-t_sel_drad-dokob
+*                                   AND objky EQ @ls_filter_dms-t_sel_drad-objky
+*                                   AND dokar IN @lra_dokar
+*                                   AND doknr IN @lra_doknr
+*                                   AND dokvr IN @lra_dokvr
+*                                   AND doktl IN @lra_doktl.
+*    IF sy-subrc NE 0.
+*      RETURN.
+*    ENDIF.
+*
+*    "Result table is sorted
+*    DELETE ADJACENT DUPLICATES FROM lt_dms_keys COMPARING ALL FIELDS.
+*
+*    "Create and collect documents as requested
+*    DATA(lv_docs_ignored) = abap_false.
+*    LOOP AT lt_dms_keys ASSIGNING FIELD-SYMBOL(<ls_dms_key>).
+*      TRY.
+*          IF mv_refresh NE mo_arch_filter->refresh_opt-refresh_from_db AND
+*             line_exists( mt_docs[ table_line->ms_data-object_id = <ls_dms_key>-s_draw_key
+*                                   table_line->ms_data-dokob     = <ls_dms_key>-dokob
+*                                   table_line->ms_data-objky     = <ls_dms_key>-objky ] ).
+*            CONTINUE.
+*          ENDIF.
+*
+*          DATA(lo_doc) =
+*             zcl_ca_archive_doc=>get_instance(
+*                                  io_parent     = me
+*                                  is_connection = VALUE #( sap_object = zif_ca_c_wf_bos=>cbo_draw-typeid
+*                                                           object_id  = <ls_dms_key>-s_draw_key
+*                                                           dokob      = <ls_dms_key>-dokob
+*                                                           objky      = <ls_dms_key>-objky ) ).
+*
+*          IF lo_doc->ms_data-dokst NOT IN lra_dokst.
+*            CONTINUE.
+*          ENDIF.
+*
+*          IF iv_only_act_vers         EQ abap_true  AND
+*             lo_doc->ms_data-is_activ EQ abap_false.
+*            lv_docs_ignored = abap_true.
+*            CONTINUE.
+*          ENDIF.
+*
+*          IF iv_only_rel_vers            EQ abap_true  AND
+*             lo_doc->ms_data-is_released EQ abap_false.
+*            lv_docs_ignored = abap_true.
+*            CONTINUE.
+*          ENDIF.
+*
+*          APPEND lo_doc TO mt_docs.
+*
+*        CATCH zcx_ca_archive_content INTO DATA(lx_error).
+*          IF lx_error->mv_msgty CA zcx_ca_error=>c_msgty_eax.
+*            RAISE EXCEPTION lx_error.
+*
+*          ELSE.
+*            lv_docs_ignored = abap_true.
+*          ENDIF.
+*      ENDTRY.
+*    ENDLOOP.
+*
+*    ms_filter_dms = is_filter_dms.
+*
+*    IF lv_docs_ignored EQ abap_true.
+*      "Due to validity or release reasons documents were ignored
+*      MESSAGE s065(zca_toolbox).
+*    ENDIF.
   ENDMETHOD.                    "get_dms_cont
 
 
@@ -1636,6 +1710,15 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     "   Execute Double-Click on a Hit
     "-----------------------------------------------------------------*
   ENDMETHOD.                    "if_alink_hitlist_callback~process_double_click
+
+
+  METHOD is_document_already_buffered.
+    "-----------------------------------------------------------------*
+    "   Check whether the document is already buffered
+    "-----------------------------------------------------------------*
+    result = xsdbool( mv_refresh NE mo_arch_filter->refresh_opt-refresh_from_db AND
+                      line_exists( mt_docs[ table_line->ms_data-arc_doc_id = iv_file_id ] ) ).
+  ENDMETHOD.                    "is_document_already_buffered
 
 
   METHOD set_content.

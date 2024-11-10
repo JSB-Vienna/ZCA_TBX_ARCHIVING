@@ -30,26 +30,6 @@ CLASS zcl_ca_archive_doc DEFINITION PUBLIC
       insert               FOR  zif_ca_archive_doc~insert,
       is_implace_possible  FOR  zif_ca_archive_doc~is_implace_possible.
 
-*   s t a t i c   m e t h o d s
-    CLASS-METHODS:
-      "! <p class="shorttext synchronized" lang="en">Get instance of archived document</p>
-      "!
-      "! @parameter io_parent       | <p class="shorttext synchronized" lang="en">ArchiveLink + DMS: Archived content of a business object</p>
-      "! @parameter is_connection   | <p class="shorttext synchronized" lang="en">Connection entry (= document details)</p>
-      "! @parameter iv_mandt        | <p class="shorttext synchronized" lang="en">Client (if cross-client usage)</p>
-      "! @parameter iv_sort_by_time | <p class="shorttext synchronized" lang="en">X = Order by creation time (can be much slower than normal!)</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
-      get_instance
-        IMPORTING
-          io_parent       TYPE REF TO zcl_ca_archive_content
-          is_connection   TYPE zca_s_toav0_ext
-          iv_mandt        TYPE symandt   DEFAULT sy-mandt
-          iv_sort_by_time TYPE abap_bool DEFAULT abap_false
-        RETURNING
-          VALUE(result)   TYPE REF TO zif_ca_archive_doc
-        RAISING
-          zcx_ca_archive_content.
-
 *   i n s t a n c e   m e t h o d s
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Constructor</p>
@@ -57,7 +37,7 @@ CLASS zcl_ca_archive_doc DEFINITION PUBLIC
       "! @parameter io_parent     | <p class="shorttext synchronized" lang="en">ArchiveLink + DMS: Archived content of a business object</p>
       "! @parameter is_connection | <p class="shorttext synchronized" lang="en">Document (= connection entry)</p>
       "! @parameter iv_mandt      | <p class="shorttext synchronized" lang="en">Client (if cross-client usage)</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       constructor
         IMPORTING
           io_parent     TYPE REF TO zcl_ca_archive_content
@@ -105,7 +85,7 @@ CLASS zcl_ca_archive_doc DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Get document class definition</p>
       "!
       "! @parameter iv_doc_class         | <p class="shorttext synchronized" lang="en">Document class</p>
-      "! @raising zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       get_doc_class_definition
         IMPORTING
           iv_doc_class TYPE saedoktyp
@@ -119,7 +99,7 @@ CLASS zcl_ca_archive_doc DEFINITION PUBLIC
       "!
       "! @parameter io_container | <p class="shorttext synchronized" lang="en">Parent container (e. g.custom or splitter container)</p>
       "! @parameter iv_url_add   | <p class="shorttext synchronized" lang="en">URL addition(s) - !!will be attached as passed!!</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       open_in_viewer
         IMPORTING
           io_container TYPE REF TO cl_gui_container OPTIONAL
@@ -210,25 +190,6 @@ CLASS zcl_ca_archive_doc IMPLEMENTATION.
       ENDIF.
     ENDIF.
   ENDMETHOD.                    "get_doc_class_description
-
-
-  METHOD get_instance.
-    "-----------------------------------------------------------------*
-    "   Get instance of archived document
-    "-----------------------------------------------------------------*
-    CASE is_connection-sap_object.
-      WHEN zif_ca_c_wf_bos=>cbo_draw-typeid.
-        result ?= NEW zcl_ca_archive_doc_dms( io_parent     = io_parent
-                                              is_connection = is_connection
-                                              iv_mandt      = iv_mandt ).
-
-      WHEN OTHERS.
-        result ?= NEW zcl_ca_archive_doc_arch_link( io_parent       = io_parent
-                                                    is_connection   = is_connection
-                                                    iv_mandt        = iv_mandt
-                                                    iv_sort_by_time = iv_sort_by_time ).
-    ENDCASE.
-  ENDMETHOD.                    "get_instance
 
 
   METHOD open_in_viewer.

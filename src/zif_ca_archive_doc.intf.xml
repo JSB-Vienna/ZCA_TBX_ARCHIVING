@@ -4,17 +4,33 @@
   <asx:values>
    <VSEOINTERF>
     <CLSNAME>ZIF_CA_ARCHIVE_DOC</CLSNAME>
-    <LANGU>E</LANGU>
+    <LANGU>D</LANGU>
     <DESCRIPT>CA-TBX: ArchiveLink + DMS: Archived document</DESCRIPT>
     <EXPOSURE>2</EXPOSURE>
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
+   <DESCRIPTIONS_INTERFACE>
+    <SEOCLASSTX>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: ArchiveLink + DMS: Archived document</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_INTERFACE>
    <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CS_URL_ADDITION</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>URL Addition to force the display by a specific application</DESCRIPT>
+    </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CS_URL_ADDITION</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>URL Addition to force the display by a specific application</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Delete a document (= connection)</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DELETE</CMPNAME>
@@ -23,8 +39,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DISPLAY</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Display single document</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Display single document</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FREE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Release objects</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>FREE</CMPNAME>
@@ -33,8 +59,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>GET_DOCUMENT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get document as binary stream</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DOCUMENT</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Get document as binary stream</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_URL</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get URL to display object</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>GET_URL</CMPNAME>
@@ -43,8 +79,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>INSERT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Insert a new document (= connection)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INSERT</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Insert a new document (= connection)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_IMPLACE_POSSIBLE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Can document be displayed in a CFW container?</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>IS_IMPLACE_POSSIBLE</CMPNAME>
@@ -53,8 +99,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MBO_DOCUMENT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>BO for document, either DRAW (=DMS) or IMAGE (=ArchiveLink)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MBO_DOCUMENT</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>BO for document, either DRAW (=DMS) or IMAGE (=ArchiveLink)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_DATA</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Document details (= connection entry)</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MS_DATA</CMPNAME>
@@ -63,8 +119,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MS_DOC_CLASS_DEF</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Document class definition</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_DOC_CLASS_DEF</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Document class definition</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_DOC_CLASS_DESCR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Document class description</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MS_DOC_CLASS_DESCR</CMPNAME>
@@ -73,8 +139,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MS_DOC_TYPE_DEF</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Document type definition</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_DOC_TYPE_DEF</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Document type definition</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_DOC_TYPE_DESCR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Document type description</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MS_DOC_TYPE_DESCR</CMPNAME>
@@ -83,8 +159,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MV_DOC_LENGTH</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Length of archived document (0 = not read from archive)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_DOC_LENGTH</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Length of archived document (0 = not read from archive)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_IMPLACE_POSSIBLE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Document can be displayed implace</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MV_IMPLACE_POSSIBLE</CMPNAME>
@@ -96,8 +182,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DELETE</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IO_CONTAINER</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Displaying container (e. g.custom or splitter container)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DISPLAY</CMPNAME>
@@ -108,8 +206,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DISPLAY</CMPNAME>
      <SCONAME>IV_FORCE_IMPLACE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Force displaying implace (use only with IO_PARENT)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_FORCE_IMPLACE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Force displaying implace (use only with IO_PARENT)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_URL_ADD</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>URL addition(s) - !!will be attached as passed!!</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DISPLAY</CMPNAME>
@@ -120,8 +230,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DISPLAY</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DOCUMENT</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Document as binary stream</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_DOCUMENT</CMPNAME>
@@ -132,8 +254,20 @@
     <SEOSUBCOTX>
      <CMPNAME>GET_DOCUMENT</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DOCUMENT</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_URL</CMPNAME>
+     <SCONAME>IV_URL_ADD</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>URL addition(s) - !!will be attached as passed!!</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_URL</CMPNAME>
@@ -144,14 +278,32 @@
     <SEOSUBCOTX>
      <CMPNAME>GET_URL</CMPNAME>
      <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>URL for displaying document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_URL</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>URL for displaying document</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_URL</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_URL</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERT</CMPNAME>
+     <SCONAME>IV_CREATOR</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>User Id of Creator</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>INSERT</CMPNAME>
@@ -162,8 +314,20 @@
     <SEOSUBCOTX>
      <CMPNAME>INSERT</CMPNAME>
      <SCONAME>IV_DESCRIPTION</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Description (captured by user)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERT</CMPNAME>
+     <SCONAME>IV_DESCRIPTION</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Description (captured by user)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERT</CMPNAME>
+     <SCONAME>IV_FILENAME</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Original file name</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>INSERT</CMPNAME>
@@ -174,8 +338,20 @@
     <SEOSUBCOTX>
      <CMPNAME>INSERT</CMPNAME>
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INSERT</CMPNAME>
+     <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: Error while handling ArchiveLink content</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_IMPLACE_POSSIBLE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Display implace is possible</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>IS_IMPLACE_POSSIBLE</CMPNAME>

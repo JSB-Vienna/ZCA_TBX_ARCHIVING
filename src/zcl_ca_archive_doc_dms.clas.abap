@@ -18,7 +18,7 @@ CLASS zcl_ca_archive_doc_dms DEFINITION PUBLIC
       "! @parameter io_parent     | <p class="shorttext synchronized" lang="en">ArchiveLink + DMS: Archived content of a business object</p>
       "! @parameter is_connection | <p class="shorttext synchronized" lang="en">Connection entry (= document details)</p>
       "! @parameter iv_mandt      | <p class="shorttext synchronized" lang="en">Client (if cross-client usage)</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       constructor
         IMPORTING
           io_parent     TYPE REF TO zcl_ca_archive_content
@@ -43,23 +43,26 @@ CLASS zcl_ca_archive_doc_dms DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Get active document version</p>
       "!
       "! @parameter result | <p class="shorttext synchronized" lang="en">Active document version</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       get_active_version
         RETURNING
           VALUE(result) TYPE dokvr
         RAISING
           zcx_ca_archive_content,
 
+      "! <p class="shorttext synchronized" lang="en">Get ArchiveLink archive Id to storage category</p>
+      get_archive_id_2_storage_cat,
+
       "! <p class="shorttext synchronized" lang="en">Get document status information</p>
       "!
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       get_doc_status_info
         RAISING
           zcx_ca_archive_content,
 
       "! <p class="shorttext synchronized" lang="en">Get DMS object data</p>
       "!
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       get_draw_data
         RAISING
           zcx_ca_archive_content.
@@ -71,7 +74,7 @@ CLASS zcl_ca_archive_doc_dms DEFINITION PUBLIC
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Create BO DRAW or its delegation counterpart</p>
       "!
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       create_bo_draw
         RAISING
           zcx_ca_archive_content.
@@ -227,6 +230,172 @@ CLASS zcl_ca_archive_doc_dms IMPLEMENTATION.
   ENDMETHOD.                    "get_active_version
 
 
+  METHOD get_archive_id_2_storage_cat.
+    "-----------------------------------------------------------------*
+    "   Get ArchiveLink archive Id to storage category
+    "-----------------------------------------------------------------*
+    SELECT SINGLE FROM sdokstca
+                FIELDS stor_rep
+                 WHERE stor_cat EQ @ms_data-storage_cat
+                  INTO @DATA(lv_archive_id).
+    IF sy-subrc EQ 0 AND
+       strlen( lv_archive_id ) BETWEEN 1 AND 2.
+      ms_data-archiv_id   = lv_archive_id.
+      ms_data-is_archived = abap_true.
+      IF ms_data-ar_object IS INITIAL.
+        "Universal document type that the viewer is able to display the document => Doc. class = *
+        ms_data-ar_object = '/BOFU/PPF1' ##no_text.
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.                    "get_archive_id_2_storage_cat
+
+
+  METHOD get_doc_status_info.
+    "-----------------------------------------------------------------*
+    "   Get document status information
+    "-----------------------------------------------------------------*
+    "Local data definitions
+    DATA:
+      ls_return     TYPE bapiret2.
+
+    "Get status inclusive short text in any case
+    CALL FUNCTION 'BAPI_DOCUMENT_GETSTATUS'
+      EXPORTING
+        documenttype      = ms_data-s_doc_key-documenttype
+        documentnumber    = ms_data-s_doc_key-documentnumber
+        documentpart      = ms_data-s_doc_key-documentpart
+        documentversion   = ms_data-s_doc_key-documentversion
+      IMPORTING
+        return            = ls_return
+        statusintern      = ms_data-dokst
+        statusextern      = ms_data-stabk
+        statusdescription = ms_data-dostx.
+
+    DATA(lx_error) =
+         CAST zcx_ca_archive_content(
+                zcx_ca_error=>create_exception(
+                         iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+                         iv_function = 'BAPI_DOCUMENT_GETSTATUS'
+                         is_return   = ls_return ) )  ##no_text.
+    IF lx_error IS BOUND.
+      RAISE EXCEPTION lx_error.
+    ENDIF.
+  ENDMETHOD.                    "get_doc_status_info
+
+
+  METHOD get_draw_data.
+    "-----------------------------------------------------------------*
+    "   Get DMS object data
+    "-----------------------------------------------------------------*
+*    "Local data definitions
+*    DATA:
+*      lt_obj_links  TYPE t_bapi_doc_drad,
+*      lt_doc_files  TYPE t_bapi_doc_files2,
+*      lt_doc_descrs TYPE tb_bapi_doc_drat,
+*      ls_doc_descr  TYPE bapi_doc_drat,
+*      ls_doc_data   TYPE bapi_doc_draw2,
+*      ls_return     TYPE bapiret2.
+
+    IF mv_mandt NE sy-mandt.
+      RETURN.
+    ENDIF.
+
+    get_archive_id_2_storage_cat( ).
+*    ms_data-s_doc_key = CONV bapi_doc_keys( ms_data-object_id ).
+*
+*    "Check, whether it is an active version and returns version number
+*    DATA(lv_doc_vers) = get_active_version( ).
+*
+*    "Set if current document is active version
+*    ms_data-is_activ = abap_false.
+*    IF ms_data-s_doc_key-documentversion EQ lv_doc_vers.
+*      ms_data-is_activ = abap_true.
+*    ENDIF.
+*
+*    "Get document status information
+*    get_doc_status_info( ).
+*
+*    "Is a released status?
+*    ms_data-is_released = abap_false.
+*    SELECT SINGLE frknz INTO  @ms_data-is_released
+*                        FROM  tdws
+*                        WHERE dokar EQ @ms_data-s_doc_key-documenttype
+*                          AND dokst EQ @ms_data-dokst.
+*
+*    "Get document data
+*    CALL FUNCTION 'BAPI_DOCUMENT_GETDETAIL2'
+*      EXPORTING
+*        documenttype         = ms_data-s_doc_key-documenttype
+*        documentnumber       = ms_data-s_doc_key-documentnumber
+*        documentpart         = ms_data-s_doc_key-documentpart
+*        documentversion      = ms_data-s_doc_key-documentversion
+*        getobjectlinks       = abap_true
+*        getactivefiles       = abap_true
+*        getdocdescriptions   = abap_true
+*        getdocfiles          = abap_true
+*      IMPORTING
+*        return               = ls_return
+*        documentdata         = ls_doc_data
+*      TABLES
+*        objectlinks          = lt_obj_links
+*        documentdescriptions = lt_doc_descrs
+*        documentfiles        = lt_doc_files.
+*
+*    DATA(lx_error) =
+*         CAST zcx_ca_archive_content(
+*                zcx_ca_error=>create_exception(
+*                         iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+*                         iv_function = 'BAPI_DOCUMENT_GETDETAIL2'
+*                         is_return   = ls_return ) )  ##no_text.
+*    IF lx_error IS BOUND.
+*      RAISE EXCEPTION lx_error.
+*    ENDIF.
+*
+*    "Set data into corresponding fields
+*    IF ls_doc_data-description IS INITIAL.
+*      IF sy-langu NE 'E' ##no_text.
+*        READ TABLE lt_doc_descrs INTO ls_doc_descr
+*                                 WITH KEY language = 'E' ##no_text.
+*
+*      ELSEIF sy-langu NE 'D' ##no_text.
+*        READ TABLE lt_doc_descrs INTO ls_doc_descr
+*                                 WITH KEY language = 'D' ##no_text.
+*      ENDIF.
+*
+*      IF sy-subrc EQ 0.
+*        ls_doc_data-description = ls_doc_descr-description.
+*
+*      ELSE.
+*        ls_doc_data-description = 'No description found'(ndf).
+*      ENDIF.
+*    ENDIF.
+*
+*    ms_doc_type_descr-objecttext = ls_doc_data-description.
+*    ms_data-ar_date       = ls_doc_data-createdate.
+*
+*    READ TABLE lt_doc_files ASSIGNING FIELD-SYMBOL(<ls_doc_file>)
+*                            INDEX 1.
+*    IF sy-subrc EQ 0.
+*      ms_data-arc_doc_id  = <ls_doc_file>-file_id.
+*      ms_data-storage_cat = <ls_doc_file>-storagecategory.
+*      ms_data-creator     = <ls_doc_file>-created_by.
+*      ms_data-ar_date     = <ls_doc_file>-created_at(8).
+*      ms_data-ar_time     = <ls_doc_file>-created_at+8(6).
+*      ms_data-reserve     = ms_doc_type_def-doc_type = to_upper( <ls_doc_file>-wsapplication ).
+*
+*      CALL FUNCTION 'CV120_SPLIT_PATH'
+*        EXPORTING
+*          pf_path  = <ls_doc_file>-docfile
+*        IMPORTING
+*          pfx_file = ms_data-filename.
+
+    ms_doc_type_def-doc_type = ms_data-reserve.
+    get_doc_class_definition( ms_doc_type_def-doc_type ).
+    get_doc_class_description( ).
+*    ENDIF.
+  ENDMETHOD.                    "get_draw_data
+
+
   METHOD zif_ca_archive_doc~get_document.
     "-----------------------------------------------------------------*
     "   Get document in binary format
@@ -317,150 +486,6 @@ CLASS zcl_ca_archive_doc_dms IMPLEMENTATION.
   ENDMETHOD.                    "zif_ca_archive_doc~get_document
 
 
-  METHOD get_doc_status_info.
-    "-----------------------------------------------------------------*
-    "   Get document status information
-    "-----------------------------------------------------------------*
-    "Local data definitions
-    DATA:
-      ls_return     TYPE bapiret2.
-
-    "Get status inclusive short text in any case
-    CALL FUNCTION 'BAPI_DOCUMENT_GETSTATUS'
-      EXPORTING
-        documenttype      = ms_data-s_doc_key-documenttype
-        documentnumber    = ms_data-s_doc_key-documentnumber
-        documentpart      = ms_data-s_doc_key-documentpart
-        documentversion   = ms_data-s_doc_key-documentversion
-      IMPORTING
-        return            = ls_return
-        statusintern      = ms_data-dokst
-        statusextern      = ms_data-stabk
-        statusdescription = ms_data-dostx.
-
-    DATA(lx_error) =
-         CAST zcx_ca_archive_content(
-                zcx_ca_error=>create_exception(
-                         iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
-                         iv_function = 'BAPI_DOCUMENT_GETSTATUS'
-                         is_return   = ls_return ) )  ##no_text.
-    IF lx_error IS BOUND.
-      RAISE EXCEPTION lx_error.
-    ENDIF.
-  ENDMETHOD.                    "get_doc_status_info
-
-
-  METHOD get_draw_data.
-    "-----------------------------------------------------------------*
-    "   Get DMS object data
-    "-----------------------------------------------------------------*
-    "Local data definitions
-    DATA:
-      lt_obj_links  TYPE t_bapi_doc_drad,
-      lt_doc_files  TYPE t_bapi_doc_files2,
-      lt_doc_descrs TYPE tb_bapi_doc_drat,
-      ls_doc_descr  TYPE bapi_doc_drat,
-      ls_doc_data   TYPE bapi_doc_draw2,
-      ls_return     TYPE bapiret2.
-
-    IF mv_mandt NE sy-mandt.
-      RETURN.
-    ENDIF.
-
-    ms_data-s_doc_key = CONV bapi_doc_keys( ms_data-object_id ).
-
-    "Check, whether it is an active version and returns version number
-    DATA(lv_doc_vers) = get_active_version( ).
-
-    "Set if current document is active version
-    ms_data-is_activ = abap_false.
-    IF ms_data-s_doc_key-documentversion EQ lv_doc_vers.
-      ms_data-is_activ = abap_true.
-    ENDIF.
-
-    "Get document status information
-    get_doc_status_info( ).
-
-    "Is a released status?
-    ms_data-is_released = abap_false.
-    SELECT SINGLE frknz INTO  @ms_data-is_released
-                        FROM  tdws
-                        WHERE dokar EQ @ms_data-s_doc_key-documenttype
-                          AND dokst EQ @ms_data-dokst.
-
-    "Get document data
-    CALL FUNCTION 'BAPI_DOCUMENT_GETDETAIL2'
-      EXPORTING
-        documenttype         = ms_data-s_doc_key-documenttype
-        documentnumber       = ms_data-s_doc_key-documentnumber
-        documentpart         = ms_data-s_doc_key-documentpart
-        documentversion      = ms_data-s_doc_key-documentversion
-        getobjectlinks       = abap_true
-        getactivefiles       = abap_true
-        getdocdescriptions   = abap_true
-        getdocfiles          = abap_true
-      IMPORTING
-        return               = ls_return
-        documentdata         = ls_doc_data
-      TABLES
-        objectlinks          = lt_obj_links
-        documentdescriptions = lt_doc_descrs
-        documentfiles        = lt_doc_files.
-
-    DATA(lx_error) =
-         CAST zcx_ca_archive_content(
-                zcx_ca_error=>create_exception(
-                         iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
-                         iv_function = 'BAPI_DOCUMENT_GETDETAIL2'
-                         is_return   = ls_return ) )  ##no_text.
-    IF lx_error IS BOUND.
-      RAISE EXCEPTION lx_error.
-    ENDIF.
-
-    "Set data into corresponding fields
-    IF ls_doc_data-description IS INITIAL.
-      IF sy-langu NE 'E' ##no_text.
-        READ TABLE lt_doc_descrs INTO ls_doc_descr
-                                 WITH KEY language = 'E' ##no_text.
-
-      ELSEIF sy-langu NE 'D' ##no_text.
-        READ TABLE lt_doc_descrs INTO ls_doc_descr
-                                 WITH KEY language = 'D' ##no_text.
-      ENDIF.
-
-      IF sy-subrc EQ 0.
-        ls_doc_data-description = ls_doc_descr-description.
-
-      ELSE.
-        ls_doc_data-description = 'No description found'(ndf).
-      ENDIF.
-    ENDIF.
-
-    ms_doc_type_descr-objecttext = ls_doc_data-description.
-    ms_data-ar_date       = ls_doc_data-createdate.
-
-    READ TABLE lt_doc_files ASSIGNING FIELD-SYMBOL(<ls_doc_file>)
-                            INDEX 1.
-    IF sy-subrc EQ 0.
-      ms_data-arc_doc_id  = <ls_doc_file>-file_id.
-      ms_data-storage_cat = <ls_doc_file>-storagecategory.
-      ms_data-creator     = <ls_doc_file>-created_by.
-      ms_data-ar_date     = <ls_doc_file>-created_at(8).
-      ms_data-ar_time     = <ls_doc_file>-created_at+8(6).
-      ms_data-reserve     = ms_doc_type_def-doc_type = to_upper( <ls_doc_file>-wsapplication ).
-
-      CALL FUNCTION 'CV120_SPLIT_PATH'
-        EXPORTING
-          pf_path  = <ls_doc_file>-docfile
-        IMPORTING
-          pfx_file = ms_data-filename.
-
-      get_doc_class_definition( ms_doc_type_def-doc_type ).
-      get_doc_class_description( ).
-    ENDIF.
-  ENDMETHOD.                    "get_draw_data
-
-
   METHOD zif_ca_archive_doc~get_url.
     "-----------------------------------------------------------------*
     "   Get URL to display object
@@ -482,11 +507,10 @@ CLASS zcl_ca_archive_doc_dms IMPLEMENTATION.
         no_original = 3
         OTHERS      = 4.
     IF sy-subrc NE 0.
-      DATA(lx_error) = CAST zcx_ca_archive_content(
-                           zcx_ca_error=>create_exception(
-                                     iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
-                                     iv_function = 'DOCUMENT_SHOW_DIRECT'
-                                     iv_subrc    = sy-subrc ) )  ##no_text.
+      DATA(lx_error) = CAST zcx_ca_archive_content( zcx_ca_error=>create_exception(
+                                                       iv_excp_cls = zcx_ca_archive_content=>c_zcx_ca_archive_content
+                                                       iv_function = 'DOCUMENT_SHOW_DIRECT'
+                                                       iv_subrc    = sy-subrc ) )  ##no_text.
       IF lx_error IS BOUND.
         RAISE EXCEPTION lx_error.
       ENDIF.

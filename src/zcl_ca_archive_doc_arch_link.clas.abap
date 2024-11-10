@@ -19,7 +19,7 @@ CLASS zcl_ca_archive_doc_arch_link DEFINITION PUBLIC
       "! @parameter is_connection   | <p class="shorttext synchronized" lang="en">Document (= connection entry)</p>
       "! @parameter iv_mandt        | <p class="shorttext synchronized" lang="en">Client (if cross-client usage)</p>
       "! @parameter iv_sort_by_time | <p class="shorttext synchronized" lang="en">X = Order by creation time (can be much slower than normal!)</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       constructor
         IMPORTING
           io_parent       TYPE REF TO zcl_ca_archive_content
@@ -33,7 +33,7 @@ CLASS zcl_ca_archive_doc_arch_link DEFINITION PUBLIC
       "!
       "! @parameter iv_comp_id | <p class="shorttext synchronized" lang="en">Component Id in generic form</p>
       "! @parameter result     | <p class="shorttext synchronized" lang="en">Meta data components of document</p>
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       get_meta_data
         IMPORTING
           iv_comp_id    TYPE sdok_filnm DEFAULT 'data*'   ##NO_TEXT
@@ -72,7 +72,7 @@ CLASS zcl_ca_archive_doc_arch_link DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Get document type definition</p>
       "!
-      "! @raising zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       get_doc_type_definition
         RAISING
           zcx_ca_archive_content,
@@ -93,21 +93,21 @@ CLASS zcl_ca_archive_doc_arch_link DEFINITION PUBLIC
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Complete document class if missing or generic</p>
       "!
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       complete_missing_doc_class
         RAISING
           zcx_ca_archive_content,
 
       "! <p class="shorttext synchronized" lang="en">Complete document type if missing</p>
       "!
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       complete_missing_doc_type
         RAISING
           zcx_ca_archive_content,
 
       "! <p class="shorttext synchronized" lang="en">Create BO IMAGE or its delegation counterpart</p>
       "!
-      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       create_bo_image
         RAISING
           zcx_ca_archive_content,
@@ -116,7 +116,7 @@ CLASS zcl_ca_archive_doc_arch_link DEFINITION PUBLIC
       "!
       "! @parameter iv_sort_by_time | <p class="shorttext synchronized" lang="en">X = Order by creation time (can be much slower than normal!)</p>
       "! @parameter result          | <p class="shorttext synchronized" lang="en">Meta data components of document</p>
-      "! @raising   zcx_ca_archive_content  | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+      "! @raising   zcx_ca_archive_content  | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
       get_creation_time
         IMPORTING
           iv_sort_by_time TYPE abap_bool
@@ -265,7 +265,8 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
                         is_connection = is_connection
                         iv_mandt      = iv_mandt ).
 
-    DATA(ls_meta_data) = get_creation_time( iv_sort_by_time ).
+    ms_data-is_archived = abap_true.
+    DATA(ls_meta_data)  = get_creation_time( iv_sort_by_time ).
 
     complete_missing_doc_class( ).
     complete_missing_doc_type( ).

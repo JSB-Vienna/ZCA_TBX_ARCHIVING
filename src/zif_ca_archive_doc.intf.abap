@@ -36,7 +36,7 @@ INTERFACE zif_ca_archive_doc PUBLIC.
   METHODS:
     "! <p class="shorttext synchronized" lang="en">Delete a document (= connection)</p>
     "!
-    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
     delete DEFAULT IGNORE
       RAISING
         zcx_ca_archive_content,
@@ -46,7 +46,7 @@ INTERFACE zif_ca_archive_doc PUBLIC.
     "! @parameter io_container           | <p class="shorttext synchronized" lang="en">Displaying container (e. g.custom or splitter container)</p>
     "! @parameter iv_url_add             | <p class="shorttext synchronized" lang="en">URL addition(s) - !!will be attached as passed!!</p>
     "! @parameter iv_force_implace       | <p class="shorttext synchronized" lang="en">X = Force displaying implace (use only with IO_PARENT)</p>
-    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
     display DEFAULT IGNORE
       IMPORTING
         io_container     TYPE REF TO cl_gui_container OPTIONAL
@@ -61,7 +61,7 @@ INTERFACE zif_ca_archive_doc PUBLIC.
     "! <p class="shorttext synchronized" lang="en">Get document as binary stream</p>
     "!
     "! @parameter result                 | <p class="shorttext synchronized" lang="en">Document as binary stream</p>
-    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
     get_document DEFAULT IGNORE
       RETURNING
         VALUE(result) TYPE xstring
@@ -72,7 +72,7 @@ INTERFACE zif_ca_archive_doc PUBLIC.
     "!
     "! @parameter iv_url_add             | <p class="shorttext synchronized" lang="en">URL addition(s) - !!will be attached as passed!!</p>
     "! @parameter result                 | <p class="shorttext synchronized" lang="en">URL for displaying document</p>
-    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
     get_url DEFAULT IGNORE
       IMPORTING
         iv_url_add    TYPE string OPTIONAL
@@ -88,7 +88,7 @@ INTERFACE zif_ca_archive_doc PUBLIC.
     "! @parameter iv_filename            | <p class="shorttext synchronized" lang="en">Original file name</p>
     "! @parameter iv_description         | <p class="shorttext synchronized" lang="en">Description (captured by user)</p>
     "! @parameter iv_creator             | <p class="shorttext synchronized" lang="en">User Id of Creator</p>
-    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">Common exception: Error while handling ArchiveLink content</p>
+    "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling ArchiveLink content</p>
     insert DEFAULT IGNORE
       IMPORTING
         iv_filename    TYPE toaat-filename DEFAULT space
