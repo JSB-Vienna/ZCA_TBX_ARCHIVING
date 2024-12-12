@@ -4,7 +4,7 @@
   <asx:values>
    <DD02V>
     <TABNAME>ZCA_S_TOAV0_EXT</TABNAME>
-    <DDLANGUAGE>D</DDLANGUAGE>
+    <DDLANGUAGE>E</DDLANGUAGE>
     <TABCLASS>INTTAB</TABCLASS>
     <LANGDEP>X</LANGDEP>
     <DDTEXT>CA-TBX: Extended archive connection incl. TOAV0</DDTEXT>
@@ -17,7 +17,7 @@
      <ADMINFIELD>0</ADMINFIELD>
      <PRECFIELD>TOAV0</PRECFIELD>
      <MASK>      S</MASK>
-     <DDTEXT>SAP ArchiveLink: Verknüpfungstabelle</DDTEXT>
+     <DDTEXT>SAP ArchiveLink: Link table</DDTEXT>
      <COMPTYPE>S</COMPTYPE>
      <GROUPNAME>S_AL_CONN</GROUPNAME>
     </DD03P>
@@ -52,7 +52,7 @@
      <ADMINFIELD>0</ADMINFIELD>
      <PRECFIELD>BAPI_DOC_KEYS</PRECFIELD>
      <MASK>      S</MASK>
-     <DDTEXT>BAPIS-DVS: Dokumentschlüssel</DDTEXT>
+     <DDTEXT>BAPIS DMS: document key</DDTEXT>
      <COMPTYPE>S</COMPTYPE>
      <GROUPNAME>S_DOC_KEY</GROUPNAME>
     </DD03P>
@@ -118,11 +118,11 @@
     </DD03P>
    </DD03P_TABLE>
    <I18N_LANGS>
-    <LANGU>E</LANGU>
+    <LANGU>D</LANGU>
    </I18N_LANGS>
    <DD02_TEXTS>
     <item>
-     <DDLANGUAGE>E</DDLANGUAGE>
+     <DDLANGUAGE>D</DDLANGUAGE>
      <DDTEXT>CA-TBX: Extended archive connection incl. TOAV0</DDTEXT>
     </item>
    </DD02_TEXTS>

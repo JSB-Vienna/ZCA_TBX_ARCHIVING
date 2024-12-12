@@ -4,7 +4,7 @@
   <asx:values>
    <VSEOCLASS>
     <CLSNAME>ZCX_CA_ARCHIVE_CONTENT</CLSNAME>
-    <LANGU>D</LANGU>
+    <LANGU>E</LANGU>
     <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     <CATEGORY>40</CATEGORY>
     <STATE>1</STATE>
@@ -51,7 +51,7 @@
    </SOTS_USE>
    <DESCRIPTIONS_CLASS>
     <SEOCLASSTX>
-     <LANGU>E</LANGU>
+     <LANGU>D</LANGU>
      <DESCRIPT>CA-TBX exception: Error while handling Archive content</DESCRIPT>
     </SEOCLASSTX>
    </DESCRIPTIONS_CLASS>

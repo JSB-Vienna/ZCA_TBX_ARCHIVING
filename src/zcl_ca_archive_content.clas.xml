@@ -4,7 +4,7 @@
   <asx:values>
    <VSEOCLASS>
     <CLSNAME>ZCL_CA_ARCHIVE_CONTENT</CLSNAME>
-    <LANGU>D</LANGU>
+    <LANGU>E</LANGU>
     <DESCRIPT>CA-TBX: ArchiveLink + DMS content of a business object</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
@@ -15,30 +15,30 @@
     <item>
      <ID>I</ID>
      <KEY>ALD</KEY>
-     <ENTRY>ArchivLink-Dokumente zu</ENTRY>
-     <LENGTH>50</LENGTH>
+     <ENTRY>Archive/DMS document to</ENTRY>
+     <LENGTH>40</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>NDF</KEY>
-     <ENTRY>Keine Beschreibung vorhanden</ENTRY>
+     <ENTRY>No description found</ENTRY>
      <LENGTH>50</LENGTH>
     </item>
    </TPOOL>
    <I18N_TPOOL>
     <item>
-     <LANGUAGE>E</LANGUAGE>
+     <LANGUAGE>D</LANGUAGE>
      <TEXTPOOL>
       <item>
        <ID>I</ID>
        <KEY>ALD</KEY>
-       <ENTRY>Archive/DMS document to</ENTRY>
-       <LENGTH>40</LENGTH>
+       <ENTRY>ArchivLink-Dokumente zu</ENTRY>
+       <LENGTH>50</LENGTH>
       </item>
       <item>
        <ID>I</ID>
        <KEY>NDF</KEY>
-       <ENTRY>No description found</ENTRY>
+       <ENTRY>Keine Beschreibung vorhanden</ENTRY>
        <LENGTH>50</LENGTH>
       </item>
      </TEXTPOOL>
@@ -46,7 +46,7 @@
    </I18N_TPOOL>
    <DESCRIPTIONS_CLASS>
     <SEOCLASSTX>
-     <LANGU>E</LANGU>
+     <LANGU>D</LANGU>
      <DESCRIPT>CA-TBX: ArchiveLink + DMS content of a business object</DESCRIPT>
     </SEOCLASSTX>
    </DESCRIPTIONS_CLASS>

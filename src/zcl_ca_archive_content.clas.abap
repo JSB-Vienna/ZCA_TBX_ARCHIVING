@@ -540,21 +540,21 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                                       iv_xstring = iv_doc
                                     IMPORTING
                                       et_xtab    = lt_document_as_binary ).
-          IF iv_doc_length IS INITIAL.
+          IF lv_document_length IS INITIAL.
             lv_document_length = determine_binary_doc_length( lt_document_as_binary ).
           ENDIF.
 
         ELSEIF it_doc_bin IS NOT INITIAL.
           "B i n a r y   t a b l e
           lt_document_as_binary = it_doc_bin.
-          IF iv_doc_length IS INITIAL.
+          IF lv_document_length IS INITIAL.
             lv_document_length = determine_binary_doc_length( lt_document_as_binary ).
           ENDIF.
 
         ELSEIF it_doc_char IS NOT INITIAL.
           "Character table
           DATA(lt_document_in_character) = it_doc_char.
-          IF iv_doc_length IS INITIAL.
+          IF lv_document_length IS INITIAL.
             lv_document_length = determine_character_doc_length( lt_document_in_character ).
           ENDIF.
 
