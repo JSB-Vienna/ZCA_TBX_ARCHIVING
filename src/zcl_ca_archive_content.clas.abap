@@ -677,9 +677,9 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     get( iv_refresh = mo_arch_filter->refresh_opt-refresh_from_db ).
 
     "Insert new documents
-    LOOP AT it_docs REFERENCE INTO DATA(lr_doc_connection).
+    LOOP AT it_docs INTO DATA(ls_doc_connection).
       "Archiv and document id and document type must be set
-      IF lr_doc_connection->archiv_id IS INITIAL.
+      IF ls_doc_connection-archiv_id IS INITIAL.
         "Parameter '&1' has invalid value '&2'
         RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>param_invalid
                                                     mv_msgty = zcx_ca_archive_content=>c_msgty_e
@@ -687,7 +687,7 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                                                     mv_msgv2 = 'IT_DOCS-ARCHIV_ID' ) ##no_text.
       ENDIF.
 
-      IF lr_doc_connection->arc_doc_id IS INITIAL.
+      IF ls_doc_connection-arc_doc_id IS INITIAL.
         "Parameter '&1' has invalid value '&2'
         RAISE EXCEPTION NEW zcx_ca_archive_content( textid   = zcx_ca_archive_content=>param_invalid
                                                     mv_msgty = zcx_ca_archive_content=>c_msgty_e
@@ -697,23 +697,22 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
 
       "Check it if this object is already linked
       LOOP AT mt_docs TRANSPORTING NO FIELDS
-                      WHERE table_line->ms_data-archiv_id  EQ lr_doc_connection->archiv_id
-                        AND table_line->ms_data-arc_doc_id EQ lr_doc_connection->arc_doc_id ##needed.
+                      WHERE table_line->ms_data-archiv_id  EQ ls_doc_connection-archiv_id
+                        AND table_line->ms_data-arc_doc_id EQ ls_doc_connection-arc_doc_id ##needed.
 
       ENDLOOP.
       IF sy-subrc NE 0.
         "If document wasn't found insert document to content
         "Set object and key of current instance
-        lr_doc_connection->sap_object = ms_bo_key-typeid.
-        lr_doc_connection->object_id  = ms_bo_key-instid.
+        ls_doc_connection-sap_object = ms_bo_key-typeid.
+        ls_doc_connection-object_id  = ms_bo_key-instid.
 
         DATA(lo_document) = CAST zif_ca_archive_doc( NEW zcl_ca_archive_doc_arch_link(
                                                                   io_parent       = me
-                                                                  is_connection   = lr_doc_connection->*
-                                                                  iv_mandt        = mv_mandt ) ).
-        lo_document->insert( iv_filename    = lr_doc_connection->filename
-                             iv_description = lr_doc_connection->descr
-                             iv_creator     = lr_doc_connection->creator ).
+                                                                  is_connection   = ls_doc_connection                                                                iv_mandt        = mv_mandt ) ).
+        lo_document->insert( iv_filename    = ls_doc_connection-filename
+                             iv_description = ls_doc_connection-descr
+                             iv_creator     = ls_doc_connection-creator ).
 
         APPEND lo_document TO mt_docs.
       ENDIF.
