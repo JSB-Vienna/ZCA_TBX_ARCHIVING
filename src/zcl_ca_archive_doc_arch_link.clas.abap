@@ -167,11 +167,11 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
              FIELDS doc_type
               WHERE mimetype EQ @ls_meta_data-mimetype
                INTO @lv_doc_class
-                    UP TO 1 ROWS.
+                    UP TO 1 ROWS.                       "#EC CI_NOORDER
         ENDSELECT.
         IF sy-subrc NE 0.
           IF ls_meta_data-compid CS 'data*' OR
-             ls_meta_data-compid CS '*.pg*'.
+             ls_meta_data-compid CS '*.pg*' ##no_text.
             "MIME type & does not exist in table TOADD
             RAISE EXCEPTION TYPE zcx_ca_archive_content
               EXPORTING
@@ -231,7 +231,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
           WHERE cd~sap_object EQ @mo_parent->ms_bo_key-typeid
             AND dt~doc_type   EQ @ms_data-reserve
            INTO TABLE @DATA(lt_doc_types_found).
-    IF sy-subrc NE 0.
+    IF sy-dbcnt EQ 0.
       "No document types found for BO &1 and document class &2
       RAISE EXCEPTION TYPE zcx_ca_archive_content
         EXPORTING
@@ -240,19 +240,16 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
           mv_msgv1 = CONV #( mo_parent->ms_bo_key-typeid )
           mv_msgv2 = CONV #( ms_data-reserve ).
 
-    ELSE.
-      CASE lines( lt_doc_types_found ).
-        WHEN 1.
-          ms_data-ar_object = lt_doc_types_found[ 1 ].
+    ELSEIF sy-dbcnt EQ 1.
+      ms_data-ar_object = lt_doc_types_found[ 1 ].
 
-        WHEN OTHERS.
-          "Determination of document type via document class &1 is not unique
-          RAISE EXCEPTION TYPE zcx_ca_archive_content
-            EXPORTING
-              textid   = zcx_ca_archive_content=>determine_doc_type_failed
-              mv_msgty = zcx_ca_archive_content=>c_msgty_e
-              mv_msgv1 = CONV #( ms_data-reserve ).
-      ENDCASE.
+    ELSE.
+      "Determination of document type via document class &1 is not unique
+      RAISE EXCEPTION TYPE zcx_ca_archive_content
+        EXPORTING
+          textid   = zcx_ca_archive_content=>determine_doc_type_failed
+          mv_msgty = zcx_ca_archive_content=>c_msgty_e
+          mv_msgv1 = CONV #( ms_data-reserve ).
     ENDIF.
   ENDMETHOD.                    "complete_missing_doc_type
 
