@@ -68,6 +68,21 @@ INTERFACE zif_ca_archive_doc PUBLIC.
       RAISING
         zcx_ca_archive_content,
 
+    "! <p class="shorttext synchronized" lang="en">Get document name</p>
+    "!
+    "! <p>The document name set from one of the following fields and this order:</p>
+    "! <em><ul>
+    "!   <li>Name of the uploaded file,</li>
+    "!   <li>the description of the user while storing the document in the archive or</li>
+    "!   <li>the description of the ArchiveLink document type</li>
+    "! </ul></em>
+    "! <p>plus a sequential 2-digit number if a name is identical.</p>
+    "!
+    "! @parameter result | <p class="shorttext synchronized" lang="en">Document name</p>
+    get_document_name DEFAULT IGNORE
+      RETURNING
+        VALUE(result) TYPE bcsd_subj,
+
     "! <p class="shorttext synchronized" lang="en">Get URL to display object</p>
     "!
     "! @parameter iv_url_add             | <p class="shorttext synchronized" lang="en">URL addition(s) - !!will be attached as passed!!</p>

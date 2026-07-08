@@ -181,12 +181,11 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
 
           ELSE.
             "Get file extension as document class
-            DATA(lo_data_access_obj) = NEW /ui2/cl_dps_dao( ).
-            lo_data_access_obj->split_file_name_and_type(
-                                                    EXPORTING
-                                                      iv_filename = CONV #( ls_meta_data-compid )
-                                                    IMPORTING
-                                                      ev_type     = lv_doc_class ).
+            FIND ALL OCCURRENCES OF '.' IN ls_meta_data-compid MATCH OFFSET DATA(lv_offset_last_one).
+            IF lv_offset_last_one IS NOT INITIAL. "filename starts with a dot
+              lv_offset_last_one += 1.
+              lv_doc_class = ls_meta_data-compid+lv_offset_last_one.
+            ENDIF.
           ENDIF.
         ENDIF.
       ENDIF.
@@ -225,7 +224,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
 
     "Search for document type via document class
     SELECT FROM toaom AS cd
-                INNER JOIN toadv AS dt
+                INNER JOIN toadv AS dt                 "#EC CI_BUFFJOIN
                            ON dt~ar_object EQ cd~ar_object
          FIELDS dt~ar_object
           WHERE cd~sap_object EQ @mo_parent->ms_bo_key-typeid
@@ -241,7 +240,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
           mv_msgv2 = CONV #( ms_data-reserve ).
 
     ELSEIF sy-dbcnt EQ 1.
-      ms_data-ar_object = lt_doc_types_found[ 1 ].
+      ms_data-ar_object = lt_doc_types_found[ 1 ].      "#EC CI_NOORDER
 
     ELSE.
       "Determination of document type via document class &1 is not unique
@@ -263,7 +262,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
                         iv_mandt      = iv_mandt ).
 
     ms_data-is_archived = abap_true.
-    DATA(ls_meta_data)  = get_creation_time( iv_sort_by_time ).
+    get_creation_time( iv_sort_by_time ).
 
     complete_missing_doc_class( ).
     complete_missing_doc_type( ).
@@ -471,7 +470,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
                 FIELDS filename,  descr,
                        creator,   creatime AS ar_time
                  WHERE arc_doc_id EQ @ms_data-arc_doc_id
-                  INTO CORRESPONDING FIELDS OF @ms_data.
+                  INTO CORRESPONDING FIELDS OF @ms_data.  "#EC CI_SUBRC
   ENDMETHOD.                    "get_user_defined_attributes
 
 
@@ -488,7 +487,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
     ENDIF.
 
     "Get document type definition
-    DATA(ls_doc_attributes) = CORRESPONDING toaat( ms_data MAPPING creatime = ar_time ).
+    DATA(ls_doc_attributes) = CORRESPONDING toaat( ms_data MAPPING creatime = ar_time ) ##enh_ok.
     IF ls_doc_attributes-creatime IS INITIAL.
       TRY.
           ls_doc_attributes-creatime = get_meta_data( )-comptimec.
@@ -498,7 +497,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
       ENDTRY.
     ENDIF.
 
-    MODIFY toaat FROM @ls_doc_attributes.
+    MODIFY toaat FROM @ls_doc_attributes.                 "#EC CI_SUBRC
   ENDMETHOD.                    "modify_user_defined_attributes
 
 
@@ -514,7 +513,7 @@ CLASS zcl_ca_archive_doc_arch_link IMPLEMENTATION.
                               not_found = 1
                               OTHERS    = 2 ).
     IF sy-subrc EQ 0.
-      DELETE FROM toaat WHERE arc_doc_id EQ ms_data-arc_doc_id.
+      DELETE FROM toaat WHERE arc_doc_id EQ ms_data-arc_doc_id. "#EC CI_SUBRC
       DELETE mo_parent->mt_docs WHERE table_line->ms_data-arc_doc_id EQ ms_data-arc_doc_id.
 
     ELSE.

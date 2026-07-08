@@ -68,6 +68,11 @@
      <DESCRIPT>Get document as binary stream</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>GET_DOCUMENT_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get document name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>GET_URL</CMPNAME>
      <LANGU>D</LANGU>
      <DESCRIPT>Get URL to display object</DESCRIPT>
@@ -262,6 +267,12 @@
      <SCONAME>ZCX_CA_ARCHIVE_CONTENT</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: Error while handling ArchiveLink content</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DOCUMENT_NAME</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Document name</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_URL</CMPNAME>

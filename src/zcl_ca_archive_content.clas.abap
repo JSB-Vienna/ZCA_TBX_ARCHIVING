@@ -764,8 +764,8 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
       check_bo_key_values( is_bo_key ).
       ls_bo_key = is_bo_key.
       ls_lpor   = VALUE #( typeid = to_upper( COND #( WHEN is_lpor-typeid IS NOT INITIAL
-                                                       THEN is_lpor-typeid   "use inherited type if passed
-                                                       ELSE zcl_ca_archive_content=>c_my_typeid ) )
+                                                        THEN is_lpor-typeid   "use inherited type if passed
+                                                        ELSE zcl_ca_archive_content=>c_my_typeid ) )
                           instid = NEW zcl_ca_map_bo_key_2_guid( )->get_guid_by_bo_key( is_bo_key )
                           catid  = swfco_objtype_cl ).
 
@@ -1024,6 +1024,7 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
       EXPORTING
         objecttype                  = CONV saeanwdid( ms_bo_key-typeid )
         objectid                    = CONV saeobjid( ms_bo_key-instid )
+        documenttype                = iv_document_type
       EXCEPTIONS
         no_active_doctypes          = 1
         no_documenttype_description = 2
@@ -1264,9 +1265,29 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
-      lt_disp_docs TYPE tab_toadi.
+      lt_buttons        TYPE ttb_button,
+      lt_disp_docs      TYPE tab_toadi,
+      lv_no_toolbar     TYPE abap_boolean,
+      lv_no_gos_toolbar TYPE abap_boolean.
 
     TRY.
+        "Is a value passed different from the defaults then use them
+        IF it_buttons        IS NOT INITIAL OR
+           iv_no_toolbar     EQ abap_true   OR
+           iv_no_gos_toolbar EQ abap_true.
+          lv_no_gos_toolbar = iv_no_gos_toolbar.
+          lv_no_toolbar     = iv_no_toolbar.
+          lt_buttons        = it_buttons.
+
+        ELSE.
+          lv_no_gos_toolbar = abap_true.
+          lv_no_toolbar     = abap_false.
+          lt_buttons = get_viewer_default_button( ).
+          DELETE lt_buttons WHERE function NE '_PREV'
+                              AND function NE '_SELECT'
+                              AND function NE '_NEXT' ##no_text.
+        ENDIF.
+
         "See documentation of data element OAFROMGUI or transaction OAG1 / field 'Doc Display as Dialog Box'
         GET PARAMETER ID 'ARCHIVELINKDIALOG' FIELD DATA(lv_external_display).
 
@@ -1277,18 +1298,18 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                                                                  iv_force_imc      = iv_force_imc
                                                                  iv_force_no_imc   = iv_force_no_imc
                                                                  io_parent         = io_parent
-                                                                 it_buttons        = it_buttons
-                                                                 iv_no_toolbar     = iv_no_toolbar
-                                                                 iv_no_gos_toolbar = iv_no_gos_toolbar ).
+                                                                 it_buttons        = lt_buttons
+                                                                 iv_no_toolbar     = lv_no_toolbar
+                                                                 iv_no_gos_toolbar = lv_no_gos_toolbar ).
 
         ELSE.
           SET PARAMETER ID 'ARCHIVELINKDIALOG' FIELD 'VIEWER' ##no_text.      "Open in separate screen
           mo_viewer = zcl_ca_archive_cont_viewer=>get_singleton( iv_use_singleton  = iv_use_singleton
                                                                  iv_force_imc      = iv_force_imc
                                                                  iv_force_no_imc   = iv_force_no_imc
-                                                                 it_buttons        = it_buttons
-                                                                 iv_no_toolbar     = iv_no_toolbar
-                                                                 iv_no_gos_toolbar = iv_no_gos_toolbar ).
+                                                                 it_buttons        = lt_buttons
+                                                                 iv_no_toolbar     = lv_no_toolbar
+                                                                 iv_no_gos_toolbar = lv_no_gos_toolbar ).
         ENDIF.
 
         "Reset to last value of the user.
@@ -1378,7 +1399,7 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
                       table_line->ms_data-ar_time DESCENDING.
       mv_count = lines( mt_docs ).
 
-      IF _number_of_docs_before NE mv_count.
+      IF _number_of_docs_before LT mv_count.
         RAISE EVENT new_document_stored
           EXPORTING
             refresh_with_opt = mv_refresh
@@ -1406,10 +1427,7 @@ CLASS zcl_ca_archive_content IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Are already documents attached to business object
     "-----------------------------------------------------------------*
-    result = abap_false.
-    IF mt_docs IS NOT INITIAL.
-      result = abap_true.
-    ENDIF.
+    result = xsdbool( mt_docs IS NOT INITIAL ).
   ENDMETHOD.                    "zif_ca_archive_content~has_content
 
 

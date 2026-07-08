@@ -77,11 +77,13 @@ INTERFACE zif_ca_archive_content PUBLIC.
     "! <p>This key is only for late instantiating and will be ignored, if the attribute MO_ARCHIVE_CONTENT has
     "! already an instance.</p>
     "!
+    "! @parameter iv_document_type       | <p class="shorttext synchronized" lang="en">Specific document type</p>
     "! @parameter iv_refresh             | <p class="shorttext synchronized" lang="en">X=Refresh from DB, D=Add Delta (only new), ' '=Return buffer</p>
     "! @raising   zcx_ca_archive_content | <p class="shorttext synchronized" lang="en">CA-TBX exception: Error while handling Archive content</p>
     archive_via_dnd_dialog
       IMPORTING
-        iv_refresh TYPE char1 DEFAULT zcl_ca_c_archive_content=>refresh_opt-add_delta_only
+        iv_document_type TYPE saeobjart OPTIONAL
+        iv_refresh       TYPE char1 DEFAULT zcl_ca_c_archive_content=>refresh_opt-add_delta_only
       RAISING
         zcx_ca_archive_content,
 

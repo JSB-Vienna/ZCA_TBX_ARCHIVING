@@ -12,23 +12,24 @@ CLASS zcl_ca_archive_doc DEFINITION PUBLIC
 *   a l i a s e s
     ALIASES:
 *     Variables
-      cs_url_addition      FOR  zif_ca_archive_doc~cs_url_addition,
-      mbo_document         FOR  zif_ca_archive_doc~mbo_document,
-      ms_data              FOR  zif_ca_archive_doc~ms_data,
-      ms_doc_class_def     FOR  zif_ca_archive_doc~ms_doc_class_def,
-      ms_doc_class_descr   FOR  zif_ca_archive_doc~ms_doc_class_descr,
-      ms_doc_type_def      FOR  zif_ca_archive_doc~ms_doc_type_def,
-      ms_doc_type_descr    FOR  zif_ca_archive_doc~ms_doc_type_descr,
-      mv_doc_length        FOR  zif_ca_archive_doc~mv_doc_length,
-      mv_implace_possible  FOR  zif_ca_archive_doc~mv_implace_possible,
+      cs_url_addition      FOR zif_ca_archive_doc~cs_url_addition,
+      mbo_document         FOR zif_ca_archive_doc~mbo_document,
+      ms_data              FOR zif_ca_archive_doc~ms_data,
+      ms_doc_class_def     FOR zif_ca_archive_doc~ms_doc_class_def,
+      ms_doc_class_descr   FOR zif_ca_archive_doc~ms_doc_class_descr,
+      ms_doc_type_def      FOR zif_ca_archive_doc~ms_doc_type_def,
+      ms_doc_type_descr    FOR zif_ca_archive_doc~ms_doc_type_descr,
+      mv_doc_length        FOR zif_ca_archive_doc~mv_doc_length,
+      mv_implace_possible  FOR zif_ca_archive_doc~mv_implace_possible,
 *     Methods
-      delete               FOR  zif_ca_archive_doc~delete,
-      display              FOR  zif_ca_archive_doc~display,
-      free                 FOR  zif_ca_archive_doc~free,
-      get_document         FOR  zif_ca_archive_doc~get_document,
-      get_url              FOR  zif_ca_archive_doc~get_url,
-      insert               FOR  zif_ca_archive_doc~insert,
-      is_implace_possible  FOR  zif_ca_archive_doc~is_implace_possible.
+      delete               FOR zif_ca_archive_doc~delete,
+      display              FOR zif_ca_archive_doc~display,
+      free                 FOR zif_ca_archive_doc~free,
+      get_document         FOR zif_ca_archive_doc~get_document,
+      get_document_name    FOR zif_ca_archive_doc~get_document_name,
+      get_url              FOR zif_ca_archive_doc~get_url,
+      insert               FOR zif_ca_archive_doc~insert,
+      is_implace_possible  FOR zif_ca_archive_doc~is_implace_possible.
 
 *   i n s t a n c e   m e t h o d s
     METHODS:
@@ -304,6 +305,22 @@ CLASS zcl_ca_archive_doc IMPLEMENTATION.
       ENDIF.
     ENDIF.
   ENDMETHOD.                    "zif_ca_archive_doc~free
+
+
+  METHOD zif_ca_archive_doc~get_document_name.
+    "-----------------------------------------------------------------*
+    "   Get document name
+    "-----------------------------------------------------------------*
+    CALL FUNCTION 'CV120_SPLIT_FILE'
+      EXPORTING
+        pf_file  = ms_data-filename
+      IMPORTING
+        pfx_file = result.     "File name w/o extension
+
+    result = COND #( WHEN result        IS NOT INITIAL  THEN result
+                     WHEN ms_data-descr IS NOT INITIAL  THEN ms_data-descr
+                     ELSE ms_doc_type_descr-objecttext ).
+  ENDMETHOD.                    "zif_ca_archive_doc~get_document_name
 
 
   METHOD zif_ca_archive_doc~is_implace_possible.

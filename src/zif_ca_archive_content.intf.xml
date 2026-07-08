@@ -425,6 +425,12 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>ARCHIVE_VIA_DND_DIALOG</CMPNAME>
+     <SCONAME>IV_DOCUMENT_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Specific document type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ARCHIVE_VIA_DND_DIALOG</CMPNAME>
      <SCONAME>IV_REFRESH</SCONAME>
      <LANGU>D</LANGU>
      <DESCRIPT>X=Refresh from DB, D=Add Delta (only new), &apos; &apos;=Return buffer</DESCRIPT>
